@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Traditional Chinese Medicine | Linrui Tan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="site-nav.css">
+    <style>
+      :root {
+        --ink: #1a1208;
+        --mist: rgba(240,235,220,0.88);
+        --paper: #f5f0e8;
+        --gold: #b8975a;
+        --moss: #4a5e3a;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: 'EB Garamond', Georgia, serif;
+        color: var(--ink);
+        min-height: 100vh;
+        background: var(--paper);
+      }
+      #zen-canvas {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        z-index: 0; pointer-events: none;
+      }
+      #content-wrapper {
+        position: relative; z-index: 5;
+        width: 100%; padding: 24px 0 80px;
+      }
+      .content-panel {
+        background: var(--mist);
+        backdrop-filter: blur(6px);
+        border-radius: 8px;
+        margin: 0;
+        padding: 28px 32px;
+        border: 1px solid rgba(184,151,90,0.18);
+        box-shadow: 0 2px 20px rgba(26,18,8,0.06);
+      }
+      p { font-size: 15px; line-height: 1.75; color: #2a220e; }
+      a { color: var(--moss); text-decoration: none; border-bottom: 1px dotted rgba(74,94,58,0.4); }
+      a:hover { color: var(--gold); border-color: var(--gold); }
+      .chapter-block { border-bottom: 1px solid rgba(184,151,90,0.12); }
+      .chapter-block .chapter-hint { border-bottom: none; }
+      footer {
+        text-align: center; font-size: 12px; color: rgba(26,18,8,0.4);
+        padding: 24px 16px 0;
+      }
+      @media (max-width: 600px) { .content-panel { padding: 20px 16px; } }
+    </style>
+  </head>
+  <body>
+    <canvas id="zen-canvas"></canvas>
+    <div id="content-wrapper">
+      <div class="site-layout">
+        <aside class="site-sidebar" aria-label="Page navigation">
+          <nav class="site-nav" aria-label="Site pages">
+            <ul class="site-nav-list">
+              <li><a href="index.html" class="site-nav-link">Home</a></li>
+              <li><a href="research.html" class="site-nav-link">Research</a></li>
+              <li><a href="buddhism-books-translation.html" class="site-nav-link">Buddhism books translation</a></li>
+              <li><a href="photography.html" class="site-nav-link">Photography</a></li>
+              <li><a href="traditional-chinese-medicine.html" class="site-nav-link" aria-current="page">Traditional chinese medicine</a></li>
+            </ul>
+          </nav>
+        </aside>
+        <div class="site-main">
+          <div class="content-panel">
+            <h2 class="section-heading">Traditional Chinese Medicine</h2>
+            <p style="margin-bottom: 20px;">Study notes and references on classical Chinese medicine. Download the workbook below.</p>
+            <a class="chapter-block" href="data/tcm/%E4%BC%A4%E5%AF%92%E8%AE%BA.xlsx" download>
+              <span class="chapter-title-en">Treatise on Cold Damage — Shang Han Lun</span>
+              <span class="chapter-title-zh">伤寒论</span>
+              <span class="chapter-hint">Download spreadsheet (.xlsx)</span>
+            </a>
+          </div>
+          <footer>
+            <a href="index.html" style="border:none;">Home</a>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <script>
+      const canvas = document.getElementById('zen-canvas');
+      const ctx = canvas.getContext('2d');
+      function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+      resize();
+      window.addEventListener('resize', resize);
+      function drawSky() {
+        const h = canvas.height, w = canvas.width;
+        const sky = ctx.createLinearGradient(0, 0, 0, h);
+        sky.addColorStop(0, '#b8cdd8');
+        sky.addColorStop(0.35, '#cddde5');
+        sky.addColorStop(0.65, '#d8e8d5');
+        sky.addColorStop(1, '#e8ede0');
+        ctx.fillStyle = sky;
+        ctx.fillRect(0, 0, w, h);
+      }
+      function loop() { drawSky(); requestAnimationFrame(loop); }
+      loop();
+    </script>
+  </body>
+</html>
