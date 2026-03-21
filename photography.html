@@ -44,6 +44,103 @@
       a { color: var(--moss); text-decoration: none; border-bottom: 1px dotted rgba(74,94,58,0.4); }
       a:hover { color: var(--gold); border-color: var(--gold); }
       .photo-grid figure.photo-cell { margin: 0; }
+
+      /* Lightbox — liquid glass panel over blurred backdrop */
+      .photo-lightbox {
+        padding: 0;
+        border: none;
+        max-width: calc(100vw - 32px);
+        max-height: calc(100vh - 32px);
+        background: transparent;
+        overflow: visible;
+      }
+      .photo-lightbox::backdrop {
+        background: rgba(18, 22, 32, 0.42);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+      }
+      .photo-lightbox-glass {
+        position: relative;
+        margin: auto;
+        padding: 14px 14px 18px;
+        border-radius: 22px;
+        background: linear-gradient(
+          155deg,
+          rgba(255, 255, 255, 0.38) 0%,
+          rgba(255, 255, 255, 0.14) 50%,
+          rgba(248, 250, 255, 0.22) 100%
+        );
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow:
+          0 24px 80px rgba(20, 30, 55, 0.22),
+          0 1px 0 rgba(255, 255, 255, 0.55) inset;
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+        max-width: min(92vw, 1100px);
+      }
+      .photo-lightbox-glass::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+      }
+      .photo-lightbox-img-wrap {
+        border-radius: 14px;
+        overflow: hidden;
+        line-height: 0;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      }
+      .photo-lightbox img {
+        display: block;
+        max-width: min(85vw, 1000px);
+        max-height: min(72vh, 900px);
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        margin: 0 auto;
+      }
+      .photo-lightbox-caption {
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size: 13px;
+        line-height: 1.45;
+        color: rgba(26, 18, 8, 0.88);
+        margin-top: 12px;
+        padding: 0 4px;
+        text-align: left;
+      }
+      .photo-lightbox-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 22px;
+        line-height: 1;
+        color: rgba(40, 40, 45, 0.85);
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .photo-lightbox-close:hover {
+        background: rgba(255, 255, 255, 0.65);
+        color: #111;
+      }
+      .photo-lightbox-close:focus-visible {
+        outline: 2px solid #2563eb;
+        outline-offset: 2px;
+      }
+
       footer {
         text-align: center; font-size: 12px; color: rgba(26,18,8,0.4);
         padding: 24px 16px 0;
@@ -69,7 +166,7 @@
         <div class="site-main">
           <div class="content-panel">
             <h2 class="section-heading">Photography</h2>
-            <p style="margin-bottom: 8px;">Selected photographs with location, date, and title. Captions are given in English.</p>
+            <p style="margin-bottom: 8px;">Selected photographs with location, date, and title (English). Thumbnails are cropped to a fixed frame for fast loading on GitHub Pages; <strong>click any image</strong> to open it larger in a glass panel. Press Escape or the close control to dismiss.</p>
 
             <div class="photo-grid">
               <figure class="photo-cell">
@@ -120,7 +217,66 @@
         </div>
       </div>
     </div>
+
+    <dialog id="photo-lightbox" class="photo-lightbox" aria-label="Enlarged photograph">
+      <div class="photo-lightbox-glass">
+        <button type="button" class="photo-lightbox-close" aria-label="Close">&times;</button>
+        <div class="photo-lightbox-img-wrap">
+          <img id="photo-lightbox-img" src="" alt="">
+        </div>
+        <p id="photo-lightbox-caption" class="photo-lightbox-caption"></p>
+      </div>
+    </dialog>
+
     <script>
+      (function () {
+        const dialog = document.getElementById('photo-lightbox');
+        const lbImg = document.getElementById('photo-lightbox-img');
+        const lbCap = document.getElementById('photo-lightbox-caption');
+        const closeBtn = dialog.querySelector('.photo-lightbox-close');
+
+        document.querySelectorAll('.photo-grid figure.photo-cell').forEach(function (fig) {
+          const img = fig.querySelector(':scope > img');
+          if (!img) return;
+          img.loading = 'lazy';
+          img.decoding = 'async';
+
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'photo-thumb-btn';
+          const cap = fig.querySelector('figcaption');
+          btn.setAttribute('aria-label', 'Enlarge: ' + (img.alt || (cap && cap.textContent.trim()) || 'photograph'));
+
+          const glass = document.createElement('span');
+          glass.className = 'photo-thumb-glass';
+          fig.insertBefore(btn, img);
+          glass.appendChild(img);
+          btn.appendChild(glass);
+
+          btn.addEventListener('click', function () {
+            lbImg.src = img.currentSrc || img.src;
+            lbImg.alt = img.alt || '';
+            lbCap.innerHTML = cap ? cap.innerHTML : '';
+            if (typeof dialog.showModal === 'function') {
+              dialog.showModal();
+            }
+          });
+        });
+
+        function closeLb() {
+          if (dialog.open) dialog.close();
+          lbImg.removeAttribute('src');
+        }
+
+        closeBtn.addEventListener('click', closeLb);
+        dialog.addEventListener('click', function (e) {
+          if (e.target === dialog) closeLb();
+        });
+        dialog.addEventListener('close', function () {
+          lbImg.removeAttribute('src');
+        });
+      })();
+
       const canvas = document.getElementById('zen-canvas');
       const ctx = canvas.getContext('2d');
       function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
