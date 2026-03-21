@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="site-nav.css">
 
     <style>
       :root {
@@ -133,8 +134,6 @@
         position: relative;
         z-index: 5;
         width: 100%;
-        max-width: 800px;
-        margin: 0 auto;
         padding: 0 0 320px 0;
       }
 
@@ -142,7 +141,7 @@
         background: var(--mist);
         backdrop-filter: blur(6px);
         border-radius: 8px;
-        margin: 20px 16px;
+        margin: 20px 0;
         padding: 28px 32px;
         border: 1px solid rgba(184,151,90,0.18);
         box-shadow: 0 2px 20px rgba(26,18,8,0.06);
@@ -185,55 +184,6 @@
       .links { text-align: center; margin-top: 12px; font-size: 14px; }
       .links a { border-bottom: none; margin: 0 8px; }
 
-      h2 {
-        font-family: 'Noto Serif SC', serif;
-        font-weight: 300;
-        font-size: 20px;
-        color: var(--moss);
-        letter-spacing: 0.06em;
-        padding-bottom: 10px;
-        border-bottom: 1px solid rgba(184,151,90,0.25);
-        margin-bottom: 6px;
-      }
-
-      .project-row {
-        display: flex;
-        gap: 20px;
-        padding: 20px 0;
-        border-bottom: 1px solid rgba(184,151,90,0.12);
-        align-items: flex-start;
-      }
-      .project-row:last-child { border-bottom: none; }
-
-      .project-img {
-        flex-shrink: 0;
-        width: 120px;
-      }
-      .project-img img {
-        width: 120px;
-        border-radius: 6px;
-        display: block;
-        margin-bottom: 6px;
-        border: 1px solid rgba(184,151,90,0.2);
-      }
-
-      .project-title {
-        font-size: 16px;
-        font-weight: 500;
-        color: var(--moss);
-        line-height: 1.4;
-        display: block;
-        margin-bottom: 4px;
-      }
-      .project-org {
-        font-size: 12px;
-        color: var(--gold);
-        letter-spacing: 0.05em;
-        display: block;
-        margin-bottom: 8px;
-      }
-      .project-desc { font-size: 13px; line-height: 1.6; }
-
       footer {
         text-align: center;
         font-size: 12px;
@@ -243,7 +193,6 @@
 
       @media (max-width: 600px) {
         .profile-container { flex-direction: column-reverse; align-items: center; }
-        .project-row { flex-direction: column; }
         .content-panel { padding: 20px 16px; }
         #zen-quote { font-size: 14px; }
       }
@@ -396,109 +345,43 @@
 
     <!-- ===== MAIN CONTENT ===== -->
     <div id="content-wrapper">
-
-      <!-- Header / bio -->
-      <div class="content-panel">
-        <p class="name">Linrui (Stephen) Tan &nbsp;谭林睿</p>
-        <div class="profile-container">
-          <div class="profile-text">
-            <p>
-              Welcome to my webpage! I am a PhD student at <a href="https://www.rice.edu/">Rice University</a> from Prof. <a href="https://profiles.rice.edu/faculty/ashok-veeraraghavan">Ashok Veeraraghavan</a>'s group working on optics and computational imaging. I was an undergraduate student at the <a href="https://www.rochester.edu/">University of Rochester</a> working on metaoptics, fiber optics, and traditional imaging.
-            </p>
-            <div class="links">
-              <a href="mailto:ltan13@u.rochester.edu">Email</a> &nbsp;/&nbsp;
-              <a href="data/Resume_Linrui（Stephen） Tan.pdf">Resume</a> &nbsp;/&nbsp;
-              <a href="https://www.linkedin.com/in/linrui-tan-stephen/">LinkedIn</a>
+      <div class="site-layout">
+        <aside class="site-sidebar" aria-label="Page navigation">
+          <nav class="site-nav" aria-label="Site pages">
+            <ul class="site-nav-list">
+              <li><a href="index.html" class="site-nav-link" aria-current="page">Home</a></li>
+              <li><a href="research.html" class="site-nav-link">Research</a></li>
+              <li><a href="buddhism-books-translation.html" class="site-nav-link">Buddhism books translation</a></li>
+            </ul>
+          </nav>
+        </aside>
+        <div class="site-main">
+          <!-- Header / bio -->
+          <div class="content-panel">
+            <p class="name">Linrui (Stephen) Tan &nbsp;谭林睿</p>
+            <div class="profile-container">
+              <div class="profile-text">
+                <p>
+                  Welcome to my webpage! I am a PhD student at <a href="https://www.rice.edu/">Rice University</a> from Prof. <a href="https://profiles.rice.edu/faculty/ashok-veeraraghavan">Ashok Veeraraghavan</a>'s group working on optics and computational imaging. I was an undergraduate student at the <a href="https://www.rochester.edu/">University of Rochester</a> working on metaoptics, fiber optics, and traditional imaging.
+                </p>
+                <div class="links">
+                  <a href="mailto:ltan13@u.rochester.edu">Email</a> &nbsp;/&nbsp;
+                  <a href="data/Resume_Linrui（Stephen） Tan.pdf">Resume</a> &nbsp;/&nbsp;
+                  <a href="https://www.linkedin.com/in/linrui-tan-stephen/">LinkedIn</a>
+                </div>
+              </div>
+              <div class="profile-img-wrap">
+                <a href="images/linruitan.jpg"><img src="images/linruitan.jpg" alt="profile photo"></a>
+              </div>
             </div>
           </div>
-          <div class="profile-img-wrap">
-            <a href="images/linruitan.jpg"><img src="images/linruitan.jpg" alt="profile photo"></a>
-          </div>
+
+          <footer>
+            Source code from <a href="https://github.com/jonbarron/jonbarron_website" style="border:none;">Jon Barron's website</a>.
+            &nbsp;·&nbsp; Zen background by Claude.
+          </footer>
         </div>
       </div>
-
-      <!-- Research section -->
-      <div class="content-panel">
-        <h2>Research &amp; Projects</h2>
-
-        <div class="project-row">
-          <div class="project-img">
-            <a href="https://github.com/tanlr20030801/Conversational-Based-Mental-Health-Chatbot/blob/main/Chatbot_UI.ipynb">
-              <img src="images/Chatbot_stress.png" alt="Chatbot stress router UI">
-            </a>
-          </div>
-          <div>
-            <a href="https://github.com/tanlr20030801/Conversational-Based-Mental-Health-Chatbot/blob/main/Chatbot_UI.ipynb">
-              <span class="project-title">LLM-Based Conversational Agent for Mental Health Support</span>
-            </a>
-            <span class="project-org">Rice University, Computational Wellbeing Lab</span>
-            <p class="project-desc">Built a stress-aware conversational agent that routes each user message through a calibrated SVC stress classifier and then to one of two Gemini-based assistants. The system logs every turn for analysis and is implemented as a Gradio web app.</p>
-          </div>
-        </div>
-
-        <div class="project-row">
-          <div class="project-img">
-            <a href="data/2024_Poster_Stephen_Tan_FINAL.pdf">
-              <img src="images/Parametric amplification.png" alt="Parametric amplification system">
-            </a>
-          </div>
-          <div>
-            <a href="data/2024_Poster_Stephen_Tan_FINAL.pdf">
-              <span class="project-title">High Bandwidth Detection in Photon-Starved Environments Using Parametric Optical Amplification</span>
-            </a>
-            <span class="project-org">Boston University, High Dimensional Photonics Lab</span>
-            <p class="project-desc">Demonstrated fiber-based parametric optical amplification paired with conventional high-bandwidth photodiodes to overcome the sensitivity–bandwidth trade-off in low-photon-flux detection. Achieved &gt;10× sensitivity improvement at &gt;10× higher bandwidths.</p>
-          </div>
-        </div>
-
-        <div class="project-row">
-          <div class="project-img">
-            <a href="images/EO%20modulator.gif">
-              <img src="images/EO%20modulator.gif" alt="EO modulator">
-            </a>
-          </div>
-          <div>
-            <a href="images/EO%20modulator.gif">
-              <span class="project-title">EO-Modulator for RGB Space</span>
-            </a>
-            <span class="project-org">University of Rochester, Laboratory of Nanophotonics (Prof. Qiang Lin)</span>
-            <p class="project-desc">Developed and analyzed electro-optic (EO) modulators, optimizing drive voltages and color coverage to determine V<sub>π</sub> for 450 nm, 520 nm, and 633 nm operation for high-definition, wide-gamut EO display applications.</p>
-          </div>
-        </div>
-
-        <div class="project-row">
-          <div class="project-img">
-            <a href="https://github.com/tanlr20030801/tanlr20030801.github.io/tree/main/angle-insensitive%20plasmonic%20metasurface">
-              <img src="images/Designed_Metasurface.png" alt="Designed metasurface">
-              <img src="images/Metasurface_transmission.png" alt="Metasurface transmission">
-            </a>
-          </div>
-          <div>
-            <a href="https://github.com/tanlr20030801/tanlr20030801.github.io/tree/main/angle-insensitive%20plasmonic%20metasurface">
-              <span class="project-title">Angle-Insensitive Metasurface Device</span>
-            </a>
-            <span class="project-org">University of Rochester (Prof. Cotrufo)</span>
-            <p class="project-desc">Designed and simulated angle-insensitive plasmonic metasurfaces. Explored how nanostructure geometry and material choices shape transmission spectra, with applications to compact, tunable optical components.</p>
-          </div>
-        </div>
-
-        <div class="project-row">
-          <div class="project-img" style="display:flex;align-items:center;justify-content:center;height:60px;">
-            <span style="font-size:28px;">🌿</span>
-          </div>
-          <div>
-            <span class="project-title" style="color:var(--moss);">Volunteer &amp; Mentoring</span>
-            <span class="project-org">THE AGGY PROJECT; Buddhist Student Association</span>
-            <p class="project-desc">As an advisor for THE AGGY PROJECT, mentored high school students on education pathways and research. As Event Chair of the Buddhist Student Association, organized dharma studies, meditation sessions, temple trips, and interfaith collaborations.</p>
-          </div>
-        </div>
-
-      </div>
-
-      <footer>
-        Source code from <a href="https://github.com/jonbarron/jonbarron_website" style="border:none;">Jon Barron's website</a>.
-        &nbsp;·&nbsp; Zen background by Claude.
-      </footer>
     </div>
 
     <script>

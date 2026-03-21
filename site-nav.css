@@ -1,0 +1,178 @@
+/* Shared layout: sidebar (vertical pill nav) + main column */
+
+.site-layout {
+  display: flex;
+  gap: 28px;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+  align-items: flex-start;
+  position: relative;
+  z-index: 5;
+}
+
+.site-sidebar {
+  position: sticky;
+  top: 24px;
+  flex: 0 0 260px;
+  padding: 14px 12px;
+  background: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Vertical nav — uppercase sans, blue block for current page (lab-style menu) */
+.site-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.site-nav-link {
+  display: block;
+  padding: 11px 14px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #2a2a2a;
+  border-radius: 2px;
+  border-bottom: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.site-sidebar .site-nav-link {
+  border-bottom: none;
+}
+
+.site-sidebar .site-nav-link:hover {
+  background: #f4f4f4;
+  color: #111111;
+}
+
+.site-sidebar .site-nav-link:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.site-sidebar .site-nav-link[aria-current="page"] {
+  background: #2563eb;
+  color: #ffffff;
+  pointer-events: none;
+}
+
+.site-sidebar .site-nav-link[aria-current="page"]:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.site-main {
+  flex: 1;
+  min-width: 0;
+  max-width: 800px;
+}
+
+/* Enlarged section & item titles (research + translations) */
+.section-heading {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 300;
+  font-size: 28px;
+  color: var(--moss);
+  letter-spacing: 0.05em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(184, 151, 90, 0.28);
+  margin-bottom: 8px;
+}
+
+.project-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--moss);
+  line-height: 1.35;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.chapter-block {
+  display: block;
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(184, 151, 90, 0.12);
+  text-decoration: none;
+  color: inherit;
+  border-bottom-color: rgba(184, 151, 90, 0.12);
+}
+
+.chapter-block:last-child {
+  border-bottom: none;
+}
+
+.chapter-block:hover .chapter-title-en {
+  color: var(--gold);
+}
+
+.chapter-title-en {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--moss);
+  line-height: 1.35;
+  display: block;
+  margin-bottom: 6px;
+  transition: color 0.2s ease;
+}
+
+.chapter-title-zh {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(42, 34, 14, 0.85);
+  letter-spacing: 0.06em;
+}
+
+.chapter-hint {
+  font-size: 13px;
+  color: rgba(26, 18, 8, 0.45);
+  margin-top: 6px;
+}
+
+@media (max-width: 720px) {
+  .site-layout {
+    flex-direction: column;
+    padding: 0 12px;
+  }
+
+  .site-sidebar {
+    position: relative;
+    top: 0;
+    width: 100%;
+    flex: none;
+  }
+
+  .site-nav-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .site-nav-link {
+    flex: 1 1 auto;
+    min-width: min(100%, 140px);
+    text-align: center;
+  }
+
+  .section-heading {
+    font-size: 24px;
+  }
+
+  .project-title,
+  .chapter-title-en {
+    font-size: 20px;
+  }
+}
