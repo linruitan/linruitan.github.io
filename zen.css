@@ -718,3 +718,111 @@ body.has-monk #content-wrapper { padding-bottom: calc(var(--band-h) + 72px); }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* =====================================================================
+   The jeweled stupa · 七圣财 (Buddhism translations page)
+   ===================================================================== */
+.treasures {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  margin: 40px 0 72px;
+}
+.stupa-figure {
+  position: relative;
+  flex: 0 0 280px;
+  width: 280px;
+  height: 340px;
+}
+.stupa-btn {
+  position: absolute;
+  left: 30px;
+  top: 0;
+  width: 220px;
+  height: 340px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.stupa-btn svg { display: block; width: 220px; height: 340px; overflow: visible; }
+.stupa-btn .jewel { transition: opacity 0.25s ease; }
+.stupa-btn .jewel.gone { opacity: 0; }
+.stupa-btn:hover .jewel:not(.gone) { filter: brightness(1.12); }
+.stupa-btn:active svg { transform: translateY(1px); }
+
+.fallen-jewel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  will-change: transform;
+  overflow: visible;
+}
+
+.treasure-panel { flex: 1; min-width: 0; min-height: 210px; }
+.t-title {
+  font-family: var(--serif-zh);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.t-title-en {
+  display: block;
+  font-family: var(--serif-en);
+  font-size: 16px;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+.t-body { padding-left: 18px; border-left: 1px solid var(--ochre); }
+.t-body.t-in { animation: t-in 0.7s ease both; }
+@keyframes t-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.t-hint { font-size: 15.5px; font-style: italic; color: var(--ink-faint); }
+.t-card { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.t-gem { width: 30px; height: 30px; flex-shrink: 0; overflow: visible; }
+.t-name {
+  font-family: var(--serif-zh);
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+.t-note { font-size: 13px; color: var(--ink-faint); letter-spacing: 0; }
+.t-en { font-size: 15px; font-style: italic; color: var(--ochre-ink); margin-top: 0 !important; }
+.t-text {
+  font-family: var(--serif-zh);
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--ink-soft);
+}
+.t-text-en {
+  font-size: 15.5px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-top: 6px !important;
+}
+.gem-spark {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: gem-spark 6.5s ease-in-out infinite;
+}
+@keyframes gem-spark {
+  0%, 84%, 100% { opacity: 0; transform: scale(0.2) rotate(0deg); }
+  91% { opacity: 0.95; transform: scale(1) rotate(20deg); }
+}
+.t-count { font-size: 13.5px; color: var(--ink-faint); margin-top: 10px !important; }
+
+@media (max-width: 720px) {
+  .treasures { flex-direction: column; align-items: stretch; gap: 8px; margin: 28px 0 48px; }
+  .stupa-figure { align-self: center; }
+  .treasure-panel { min-height: 190px; }
+}
