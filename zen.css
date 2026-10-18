@@ -1,0 +1,683 @@
+/* =====================================================================
+   zen.css — shared style for every page
+   ---------------------------------------------------------------------
+   色即是空 · Form is emptiness: whitespace does the work that boxes,
+   shadows and glass used to do.
+   中道 · The Middle Way: only ink, paper, and one accent (the ochre of
+   the kasaya robe), used sparingly.
+   ===================================================================== */
+
+:root {
+  --paper:      #f3eee3;   /* 宣纸 rice paper */
+  --paper-deep: #e8e0cf;
+  --ink:        #221f1a;   /* 墨 ink */
+  --ink-soft:   #4f4a40;
+  --ink-faint:  #7d7666;
+  --line:       rgba(34, 31, 26, 0.13);
+  --line-soft:  rgba(34, 31, 26, 0.07);
+  --ochre:      #a8662b;   /* kasaya robe — decorative accents */
+  --ochre-ink:  #8a4d1a;   /* ochre dark enough for text */
+
+  --serif-en: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  --serif-zh: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+
+  --band-h: 168px;         /* height of the monk band (home page) */
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body, h1, h2, h3, h4, p, ul, figure { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--serif-en);
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--ink);
+  background: var(--paper);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+[lang|="zh"], .zh { font-family: var(--serif-zh); }
+
+::selection { background: rgba(168, 102, 43, 0.18); }
+
+/* ---------- Background: still ink-wash landscape (drawn by zen.js) ---------- */
+#zen-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ---------- Links ---------- */
+a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(168, 102, 43, 0.45);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+a:hover { color: var(--ochre-ink); border-color: var(--ochre-ink); }
+a:focus-visible,
+button:focus-visible {
+  outline: 1.5px solid var(--ochre-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- Layout: quiet nav + one calm column ---------- */
+#content-wrapper {
+  position: relative;
+  z-index: 5;
+  padding: 72px 0 120px;
+}
+
+.site-layout {
+  display: flex;
+  gap: 64px;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 32px;
+  align-items: flex-start;
+}
+
+.site-sidebar {
+  position: sticky;
+  top: 72px;
+  flex: 0 0 196px;
+}
+
+.site-nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.site-nav-link,
+.site-sidebar .site-nav-link {
+  display: block;
+  position: relative;
+  padding: 5px 0 5px 18px;
+  font-family: var(--serif-en);
+  font-size: 15.5px;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+  border-bottom: none;
+}
+.site-nav-link::before {
+  /* a single ink stroke marks where you are */
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 1px;
+  background: var(--ochre);
+  transition: width 0.4s ease;
+}
+.site-nav-link:hover { color: var(--ink); }
+.site-nav-link:hover::before { width: 6px; }
+.site-nav-link[aria-current="page"] { color: var(--ink); }
+.site-nav-link[aria-current="page"]::before { width: 10px; }
+
+.site-main {
+  flex: 1;
+  min-width: 0;
+  max-width: 700px;
+}
+
+/* Panels are gone: content rests directly on the paper */
+.content-panel { padding: 0; }
+
+/* ---------- Typography ---------- */
+p { font-size: 17px; line-height: 1.8; color: var(--ink-soft); }
+p + p { margin-top: 1em; }
+em { font-style: italic; }
+
+.page-intro { margin-bottom: 36px; }
+
+.name {
+  font-family: var(--serif-zh);
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+.name .name-zh { margin-left: 0.6em; letter-spacing: 0.12em; color: var(--ink-soft); }
+
+.section-heading {
+  font-family: var(--serif-zh);
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.section-heading + p { margin-bottom: 32px; }
+.section-heading.spaced { margin-top: 72px; }
+
+/* a short brush stroke under page titles */
+.section-heading::after,
+.name::after {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 1px;
+  margin-top: 16px;
+  background: var(--ochre);
+  opacity: 0.8;
+}
+
+footer {
+  margin-top: 96px;
+  font-size: 13.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+}
+footer a { color: var(--ink-faint); border-bottom-color: var(--line); }
+
+/* ---------- Home ---------- */
+.profile-container {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+.profile-text { flex: 1; }
+.profile-img-wrap { flex-shrink: 0; width: 120px; }
+.profile-img-wrap a { border: none; }
+.profile-img-wrap img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.85);
+}
+
+.links {
+  margin-top: 22px;
+  font-size: 15.5px;
+  color: var(--ink-faint);
+}
+.links a { margin-right: 4px; }
+.links .sep { color: var(--ink-faint); opacity: 0.5; margin: 0 8px; }
+
+.home-photo-feature { margin-top: 64px; }
+.home-photo-feature figure { max-width: 380px; }
+.home-photo-feature a { border: none; }
+.home-photo-feature img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 2px;
+}
+.home-photo-feature figcaption,
+.photo-caption {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-faint);
+  margin-top: 12px;
+}
+.home-photo-feature figcaption a { border-bottom: 1px solid rgba(168, 102, 43, 0.45); }
+
+/* ---------- Research ---------- */
+.project-row {
+  display: flex;
+  gap: 28px;
+  padding: 32px 0;
+  border-top: 1px solid var(--line-soft);
+  align-items: flex-start;
+}
+.project-row:first-of-type { border-top: none; padding-top: 4px; }
+.project-img { flex-shrink: 0; width: 112px; }
+.project-img a { border: none; }
+.project-img img {
+  width: 112px;
+  display: block;
+  margin-bottom: 8px;
+  border-radius: 2px;
+}
+.project-title {
+  display: block;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+a:has(> .project-title) { border: none; }
+a:hover .project-title { color: var(--ochre-ink); }
+.project-org {
+  display: block;
+  font-size: 14.5px;
+  font-style: italic;
+  color: var(--ink-faint);
+  margin-bottom: 10px;
+}
+.project-desc { font-size: 16px; line-height: 1.7; }
+.enso { display: block; width: 56px; height: 56px; margin: 4px 0 0 4px; }
+
+/* ---------- Chapter / download lists (translations, TCM) ---------- */
+.chapter-block {
+  display: block;
+  padding: 18px 0;
+  border-bottom: none;
+  border-top: 1px solid var(--line-soft);
+  color: inherit;
+}
+.chapter-list .chapter-block:first-child { border-top: none; }
+.chapter-title-en {
+  display: block;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
+  transition: color 0.3s ease;
+}
+.chapter-title-zh {
+  display: block;
+  font-family: var(--serif-zh);
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.chapter-hint {
+  display: block;
+  font-size: 13.5px;
+  color: var(--ink-faint);
+  margin-top: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.chapter-block:hover .chapter-title-en,
+.chapter-block:focus-visible .chapter-title-en { color: var(--ochre-ink); }
+.chapter-block:hover .chapter-hint,
+.chapter-block:focus-visible .chapter-hint { opacity: 1; }
+@media (hover: none) { .chapter-hint { opacity: 1; } }
+
+.ref-line { margin: 6px 0; }
+
+/* ---------- Photography ---------- */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 40px 28px;
+  margin-top: 8px;
+}
+.photo-cell { margin: 0; min-width: 0; }
+.photo-thumb-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
+}
+.photo-thumb-glass {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--paper-deep);
+}
+.photo-thumb-glass img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1.2s ease, filter 1.2s ease;
+  filter: saturate(0.9);
+}
+.photo-thumb-btn:hover .photo-thumb-glass img { transform: scale(1.03); filter: saturate(1); }
+
+.photo-lightbox {
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  overflow: visible;
+}
+.photo-lightbox::backdrop { background: rgba(243, 238, 227, 0.94); }
+.photo-lightbox-glass {
+  position: relative;
+  margin: auto;
+  padding: 0;
+  max-width: min(92vw, 1100px);
+}
+.photo-lightbox-img-wrap { line-height: 0; }
+.photo-lightbox img {
+  display: block;
+  max-width: min(88vw, 1000px);
+  max-height: min(78vh, 900px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+  box-shadow: 0 1px 0 var(--line);
+}
+.photo-lightbox-caption {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin-top: 16px;
+  text-align: center;
+}
+.photo-lightbox-close {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--serif-en);
+  font-size: 30px;
+  line-height: 1;
+  color: var(--ink-faint);
+}
+.photo-lightbox-close:hover { color: var(--ink); }
+
+/* ---------- Traditional Chinese Medicine article ---------- */
+.tcm-article {
+  font-family: var(--serif-zh);
+  color: var(--ink-soft);
+  line-height: 1.8;
+  font-size: 15.5px;
+}
+.tcm-article .tcm-title {
+  font-weight: 400;
+  font-size: 23px;
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 8px 0 18px;
+}
+.tcm-title-en {
+  display: block;
+  font-family: var(--serif-en);
+  font-size: 17px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-faint);
+  margin-top: 6px;
+}
+.tcm-article .note {
+  font-size: 14px;
+  color: var(--ink-faint);
+  margin-bottom: 36px;
+  padding-left: 16px;
+  border-left: 1px solid var(--ochre);
+}
+.tcm-note-en { display: block; margin-top: 6px; font-family: var(--serif-en); font-size: 15px; }
+.tcm-h2 {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ink);
+  margin: 56px 0 12px;
+}
+.tcm-h2:first-of-type { margin-top: 0; }
+.tcm-h3 { font-size: 16.5px; font-weight: 500; color: var(--ink); margin: 26px 0 8px; }
+.tcm-h4 { font-size: 15.5px; font-weight: 500; color: var(--ink-soft); margin: 22px 0 8px; }
+.tcm-h2 .tcm-en, .tcm-h3 .tcm-en, .tcm-h4 .tcm-en {
+  display: block;
+  font-family: var(--serif-en);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+.tcm-h2 .tcm-en { font-size: 17px; }
+.tcm-h3 .tcm-en, .tcm-h4 .tcm-en { font-size: 15.5px; }
+.tcm-article ul { margin: 6px 0 16px 1.2em; }
+.tcm-article li { margin: 4px 0; }
+.tcm-table-wrap { overflow-x: auto; margin: 12px 0 24px; -webkit-overflow-scrolling: touch; }
+.tcm-table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 720px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.tcm-table th, .tcm-table td {
+  border-bottom: 1px solid var(--line);
+  padding: 9px 10px 9px 0;
+  vertical-align: top;
+  text-align: left;
+}
+.tcm-table th {
+  font-weight: 500;
+  color: var(--ink);
+  border-bottom: 1px solid rgba(34, 31, 26, 0.35);
+}
+.tcm-th-en {
+  display: block;
+  font-family: var(--serif-en);
+  font-size: 12px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+.tcm-summary-en {
+  display: block;
+  font-family: var(--serif-en);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink-faint);
+  margin-top: 6px;
+  line-height: 1.55;
+}
+.tcm-category-intro {
+  margin: 8px 0 12px;
+  padding-left: 14px;
+  border-left: 1px solid var(--line);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+}
+.tcm-downloads-heading {
+  font-family: var(--serif-en);
+  font-size: 21px;
+  font-weight: 400;
+  color: var(--ink);
+  margin: 72px 0 6px;
+}
+.tcm-downloads-sub { font-size: 16px; color: var(--ink-faint); margin-bottom: 12px; }
+
+/* =====================================================================
+   The monk — its own band at the bottom of the home page.
+   The band is opaque paper, so scrolling text slips behind it and never
+   overlaps the monk or the quote.
+   ===================================================================== */
+body.has-monk #content-wrapper { padding-bottom: calc(var(--band-h) + 72px); }
+
+#monk-band {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  min-height: var(--band-h);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  /* mist edge on top, then solid paper */
+  background: linear-gradient(to bottom,
+              rgba(243, 238, 227, 0) 0,
+              rgba(243, 238, 227, 0.92) 34px,
+              var(--paper) 56px);
+  pointer-events: none;           /* only the monk & quote take clicks */
+}
+
+.monk-stage {
+  position: relative;
+  width: 100%;
+  max-width: 1040px;
+  height: var(--band-h);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+#monk-btn {
+  pointer-events: auto;
+  position: relative;
+  width: 210px;
+  height: 128px;
+  margin-bottom: 10px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+#monk-btn svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+.monk-hint {
+  /* sits where the words will appear, beside the monk */
+  position: absolute;
+  left: calc(50% + 120px);
+  bottom: 30px;
+  padding-left: 18px;
+  white-space: nowrap;
+  font-size: 13px;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  transition: opacity 0.6s ease;
+}
+.monk-hint[hidden] { display: none; }
+
+/* The quote: beside the monk on wide screens, inside the band */
+#zen-quote {
+  pointer-events: auto;
+  position: absolute;
+  left: calc(50% + 120px);
+  bottom: 26px;
+  width: clamp(240px, calc(50% - 150px), 380px);
+  margin: 0;
+  padding: 0 0 0 18px;
+  border-left: 1px solid var(--ochre);
+  text-align: left;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.7s ease, transform 0.7s ease, visibility 0s linear 0.7s;
+}
+#zen-quote.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.7s ease, transform 0.7s ease, visibility 0s;
+}
+#zen-quote .q-zh {
+  display: block;
+  font-family: var(--serif-zh);
+  font-size: 15.5px;
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+#zen-quote .q-zh:empty { display: none; }
+#zen-quote .q-en {
+  display: block;
+  font-size: 15.5px;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+#zen-quote .q-src {
+  display: block;
+  margin-top: 8px;
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  color: var(--ochre-ink);
+}
+
+/* ---------- Narrow screens ---------- */
+@media (max-width: 860px) {
+  /* not enough room beside the monk: the band grows upward to hold the quote */
+  #zen-quote {
+    position: static;
+    width: auto;
+    max-width: 460px;
+    margin: 0 24px;
+    padding: 0;
+    border-left: none;
+    text-align: center;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.6s ease, max-height 0.6s ease, visibility 0s linear 0.6s;
+  }
+  #zen-quote.visible { max-height: 320px; transition: opacity 0.6s ease, max-height 0.6s ease, visibility 0s; }
+  #zen-quote .q-src::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 1px;
+    margin: 0 auto 8px;
+    background: var(--ochre);
+  }
+  .monk-stage {
+    height: auto;
+    min-height: var(--band-h);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 40px;
+  }
+  #monk-btn { margin-bottom: 24px; }
+  .monk-hint { left: 50%; bottom: 4px; padding-left: 0; transform: translateX(-50%); }
+}
+
+@media (max-width: 720px) {
+  :root { --band-h: 118px; }
+  body { font-size: 16px; }
+  p { font-size: 16px; }
+
+  #content-wrapper { padding-top: 32px; }
+  .site-layout { flex-direction: column; gap: 40px; padding: 0 20px; }
+  .site-sidebar { position: static; flex: none; width: 100%; }
+  .site-nav-list { flex-direction: row; flex-wrap: wrap; gap: 4px 20px; }
+  .site-nav-link, .site-sidebar .site-nav-link { padding: 4px 0; font-size: 15px; }
+  .site-nav-link::before { left: 0; top: auto; bottom: 2px; }
+  .site-nav-link[aria-current="page"]::before { width: 100%; }
+  .site-nav-link:hover::before { width: 100%; }
+
+  .name { font-size: 25px; }
+  .name .name-zh { display: block; margin-left: 0; }
+  .section-heading { font-size: 24px; }
+  .profile-container { flex-direction: column-reverse; gap: 24px; }
+  .project-row { flex-direction: column; gap: 16px; }
+  .photo-grid { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
+
+  #monk-btn { width: 150px; height: 92px; margin-bottom: 20px; }
+  .monk-hint { font-size: 12px; }
+}
+
+@media (max-width: 420px) {
+  .photo-grid { grid-template-columns: 1fr; }
+}
+
+/* Stillness for those who ask for it */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}

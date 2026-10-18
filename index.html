@@ -1,380 +1,20 @@
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
     <title>Linrui Tan (Stephen 谭林睿) | Personal Website</title>
     <meta name="description" content="PhD student at Rice University in Prof. Ashok Veeraraghavan's group working on optics and computational imaging.">
     <meta name="author" content="Linrui (Stephen) Tan">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="site-nav.css">
-
-    <style>
-      :root {
-        --ink: #1a1208;
-        --mist: rgba(240,235,220,0.88);
-        --paper: #f5f0e8;
-        --gold: #b8975a;
-        --moss: #4a5e3a;
-        --sky-top: #c8dde8;
-        --sky-mid: #ddeae0;
-        --sky-bottom: #eef2e6;
-      }
-
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-
-      body {
-        font-family: 'EB Garamond', Georgia, serif;
-        color: var(--ink);
-        min-height: 100vh;
-        overflow-x: hidden;
-        position: relative;
-        background: var(--paper);
-      }
-
-      /* ===== ZEN CANVAS BACKGROUND ===== */
-      #zen-canvas {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        z-index: 0;
-        pointer-events: none;
-      }
-
-      /* Mountain layers */
-      .mountain-layer {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        pointer-events: none;
-        z-index: 1;
-      }
-
-      /* ===== MONK CONTAINER ===== */
-      #monk-scene {
-        position: fixed;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: min(600px, 90vw);
-        height: 280px;
-        z-index: 3;
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
-        cursor: pointer;
-        pointer-events: all;
-      }
-
-      /* ===== ZEN QUOTE BUBBLE ===== */
-      #zen-quote {
-        position: fixed;
-        bottom: 220px;
-        left: 50%;
-        transform: translateX(-50%) translateY(10px);
-        background: rgba(245, 240, 232, 0.96);
-        border: 1px solid rgba(184,151,90,0.4);
-        border-radius: 12px;
-        padding: 16px 24px;
-        max-width: min(420px, 85vw);
-        text-align: center;
-        font-family: 'EB Garamond', serif;
-        font-size: 16px;
-        font-style: italic;
-        color: var(--ink);
-        line-height: 1.7;
-        z-index: 10;
-        opacity: 0;
-        transition: opacity 0.8s ease, transform 0.8s ease;
-        pointer-events: none;
-        box-shadow: 0 4px 30px rgba(26,18,8,0.08);
-      }
-      #zen-quote.visible {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-      #zen-quote::after {
-        content: '';
-        position: absolute;
-        bottom: -8px;
-        left: 50%;
-        transform: translateX(-50%) rotate(45deg);
-        width: 14px; height: 14px;
-        background: rgba(245,240,232,0.96);
-        border-right: 1px solid rgba(184,151,90,0.4);
-        border-bottom: 1px solid rgba(184,151,90,0.4);
-      }
-      #zen-quote .attribution {
-        display: block;
-        font-style: normal;
-        font-size: 12px;
-        color: var(--gold);
-        margin-top: 8px;
-        letter-spacing: 0.08em;
-      }
-      #zen-quote-hint {
-        position: fixed;
-        bottom: 178px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 11px;
-        color: rgba(26,18,8,0.38);
-        letter-spacing: 0.12em;
-        z-index: 10;
-        pointer-events: none;
-        font-family: 'EB Garamond', serif;
-        animation: pulse-hint 3s ease-in-out infinite;
-      }
-      @keyframes pulse-hint { 0%,100%{opacity:0.5} 50%{opacity:1} }
-
-      /* ===== MAIN CONTENT ===== */
-      #content-wrapper {
-        position: relative;
-        z-index: 5;
-        width: 100%;
-        padding: 0 0 320px 0;
-      }
-
-      .content-panel {
-        background: var(--mist);
-        backdrop-filter: blur(6px);
-        border-radius: 8px;
-        margin: 20px 0;
-        padding: 28px 32px;
-        border: 1px solid rgba(184,151,90,0.18);
-        box-shadow: 0 2px 20px rgba(26,18,8,0.06);
-      }
-
-      .name {
-        font-family: 'Noto Serif SC', serif;
-        font-size: 28px;
-        font-weight: 300;
-        text-align: center;
-        color: var(--ink);
-        letter-spacing: 0.04em;
-        padding: 8px 0 12px;
-      }
-
-      .profile-container {
-        display: flex;
-        gap: 28px;
-        align-items: flex-start;
-      }
-
-      .profile-text { flex: 1; }
-
-      .profile-img-wrap {
-        flex-shrink: 0;
-        width: 130px;
-      }
-
-      .profile-img-wrap img {
-        width: 130px; height: 130px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid rgba(184,151,90,0.35);
-      }
-
-      p { font-size: 15px; line-height: 1.75; color: #2a220e; }
-      a { color: var(--moss); text-decoration: none; border-bottom: 1px dotted rgba(74,94,58,0.4); }
-      a:hover { color: var(--gold); border-color: var(--gold); }
-
-      .links { text-align: center; margin-top: 12px; font-size: 14px; }
-      .links a { border-bottom: none; margin: 0 8px; }
-
-      footer {
-        text-align: center;
-        font-size: 12px;
-        color: rgba(26,18,8,0.4);
-        padding: 16px;
-      }
-
-      .home-photo-feature {
-        margin-top: 26px;
-        padding-top: 22px;
-        border-top: 1px solid rgba(184,151,90,0.22);
-      }
-      .home-photo-feature figure {
-        margin: 0;
-        max-width: 400px;
-      }
-      .home-photo-feature img {
-        width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 6px;
-        border: 1px solid rgba(184,151,90,0.22);
-      }
-      .home-photo-feature figcaption {
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        font-size: 13px;
-        line-height: 1.5;
-        margin-top: 10px;
-        color: #2a220e;
-        text-align: left;
-      }
-      .home-photo-feature figcaption em {
-        font-style: italic;
-      }
-      .home-photo-feature a {
-        border-bottom: none;
-      }
-
-      @media (max-width: 600px) {
-        .profile-container { flex-direction: column-reverse; align-items: center; }
-        .content-panel { padding: 20px 16px; }
-        #zen-quote { font-size: 14px; }
-      }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="zen.css">
   </head>
 
   <body>
+    <canvas id="zen-canvas" aria-hidden="true"></canvas>
 
-    <!-- ===== ZEN SVG CANVAS ===== -->
-    <canvas id="zen-canvas"></canvas>
-
-    <!-- ===== ZEN QUOTE ===== -->
-    <div id="zen-quote">
-      <span id="quote-text"></span>
-      <span class="attribution" id="quote-attr"></span>
-    </div>
-    <div id="zen-quote-hint">✦ click the monk ✦</div>
-
-    <!-- ===== MONK SCENE (SVG inline) ===== -->
-    <div id="monk-scene" title="Click for a zen moment">
-      <svg id="monk-svg" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
-        <!-- Ground / moss -->
-        <ellipse cx="300" cy="268" rx="260" ry="18" fill="#3a4f2a" opacity="0.25"/>
-        <!-- Grass tufts -->
-        <g fill="#4a5e3a" opacity="0.7">
-          <path d="M160 265 Q163 250 166 265"/>
-          <path d="M168 267 Q172 248 176 266"/>
-          <path d="M420 264 Q424 249 428 263"/>
-          <path d="M430 266 Q435 250 439 265"/>
-          <path d="M200 268 Q203 255 206 268"/>
-          <path d="M390 267 Q394 253 398 267"/>
-        </g>
-        <!-- Large tree left -->
-        <g id="tree-left">
-          <rect x="108" y="110" width="14" height="160" rx="3" fill="#5a3e28" opacity="0.85"/>
-          <ellipse cx="115" cy="120" rx="48" ry="55" fill="#3d5630" opacity="0.82"/>
-          <ellipse cx="100" cy="135" rx="30" ry="38" fill="#4a6838" opacity="0.75"/>
-          <ellipse cx="132" cy="130" rx="32" ry="40" fill="#3d5630" opacity="0.7"/>
-          <!-- Hanging leaves -->
-          <path d="M80 150 Q60 180 75 200" stroke="#4a6838" stroke-width="1.5" fill="none" opacity="0.6"/>
-          <path d="M88 160 Q70 195 82 215" stroke="#4a6838" stroke-width="1.2" fill="none" opacity="0.5"/>
-        </g>
-        <!-- Large tree right -->
-        <g id="tree-right">
-          <rect x="476" y="115" width="14" height="155" rx="3" fill="#5a3e28" opacity="0.85"/>
-          <ellipse cx="483" cy="124" rx="46" ry="52" fill="#3d5630" opacity="0.82"/>
-          <ellipse cx="465" cy="138" rx="28" ry="35" fill="#4a6838" opacity="0.7"/>
-          <ellipse cx="500" cy="132" rx="30" ry="38" fill="#3d5630" opacity="0.7"/>
-        </g>
-        <!-- Bamboo stalks -->
-        <g id="bamboo" opacity="0.8">
-          <rect x="220" y="140" width="5" height="125" rx="2.5" fill="#6a8040"/>
-          <rect x="228" y="130" width="5" height="135" rx="2.5" fill="#7a9048"/>
-          <rect x="236" y="145" width="4" height="120" rx="2" fill="#6a8040"/>
-          <line x1="222.5" y1="175" x2="222.5" y2="176" stroke="#4a6030" stroke-width="8" stroke-linecap="round"/>
-          <line x1="222.5" y1="210" x2="222.5" y2="211" stroke="#4a6030" stroke-width="8" stroke-linecap="round"/>
-          <line x1="230.5" y1="165" x2="230.5" y2="166" stroke="#4a6030" stroke-width="8" stroke-linecap="round"/>
-          <line x1="230.5" y1="200" x2="230.5" y2="201" stroke="#4a6030" stroke-width="8" stroke-linecap="round"/>
-          <!-- Bamboo leaves -->
-          <path d="M222 140 Q230 125 245 130" stroke="#5a7038" stroke-width="1.8" fill="none"/>
-          <path d="M230 128 Q240 112 258 118" stroke="#5a7038" stroke-width="1.8" fill="none"/>
-          <path d="M238 143 Q248 128 262 133" stroke="#5a7038" stroke-width="1.5" fill="none"/>
-        </g>
-        <!-- Same on right -->
-        <g id="bamboo-r" opacity="0.8">
-          <rect x="352" y="138" width="5" height="127" rx="2.5" fill="#6a8040"/>
-          <rect x="361" y="128" width="5" height="137" rx="2.5" fill="#7a9048"/>
-          <rect x="370" y="142" width="4" height="123" rx="2" fill="#6a8040"/>
-          <line x1="354.5" y1="172" x2="354.5" y2="173" stroke="#4a6030" stroke-width="8" stroke-linecap="round"/>
-          <line x1="354.5" y1="208" x2="354.5" y2="209" stroke="#4a6030" stroke-width="8" stroke-linecap="round"/>
-          <line x1="363.5" y1="163" x2="363.5" y2="164" stroke="#4a6030" stroke-width="8" stroke-linecap="round"/>
-          <path d="M352 136 Q344 120 330 126" stroke="#5a7038" stroke-width="1.8" fill="none"/>
-          <path d="M361 126 Q352 108 336 115" stroke="#5a7038" stroke-width="1.8" fill="none"/>
-        </g>
-        <!-- Stone lantern -->
-        <g opacity="0.75">
-          <rect x="420" y="230" width="22" height="6" rx="1" fill="#8a8070"/>
-          <rect x="423" y="210" width="16" height="20" rx="2" fill="#7a7060"/>
-          <polygon points="423,210 431,200 439,210" fill="#6a6050"/>
-          <rect x="426" y="224" width="10" height="6" rx="1" fill="#7a7060"/>
-          <!-- lantern glow -->
-          <ellipse cx="431" cy="218" rx="4" ry="5" fill="rgba(255,200,80,0.3)"/>
-        </g>
-        <!-- Small rocks -->
-        <ellipse cx="260" cy="267" rx="18" ry="7" fill="#8a8070" opacity="0.5"/>
-        <ellipse cx="270" cy="265" rx="10" ry="5" fill="#9a9080" opacity="0.45"/>
-        <ellipse cx="340" cy="266" rx="14" ry="6" fill="#8a8070" opacity="0.45"/>
-
-        <!-- ===== MONK ===== -->
-        <g id="monk" transform="translate(300, 265)">
-          <!-- Robe base (seated lotus) -->
-          <ellipse cx="0" cy="-22" rx="38" ry="22" fill="#c47c30" opacity="0.92"/>
-          <!-- Robe shading -->
-          <ellipse cx="0" cy="-22" rx="38" ry="22" fill="url(#robeGrad)" opacity="0.6"/>
-          <!-- Robe folds -->
-          <path d="M-38,-22 Q-20,-8 0,-5 Q20,-8 38,-22" stroke="#a86020" stroke-width="1" fill="none" opacity="0.5"/>
-          <path d="M-30,-18 Q-15,-28 0,-30 Q15,-28 30,-18" stroke="#a86020" stroke-width="0.8" fill="none" opacity="0.4"/>
-          <!-- Hands in lap (mudra) -->
-          <ellipse cx="-8" cy="-20" rx="9" ry="6" fill="#d4936a" opacity="0.9"/>
-          <ellipse cx="8" cy="-20" rx="9" ry="6" fill="#d4936a" opacity="0.9"/>
-          <!-- Body -->
-          <rect x="-14" y="-62" width="28" height="42" rx="6" fill="#c47c30" opacity="0.9"/>
-          <!-- Neck -->
-          <rect x="-6" y="-68" width="12" height="10" rx="4" fill="#d4936a"/>
-          <!-- Head -->
-          <ellipse cx="0" cy="-82" rx="18" ry="18" fill="#d4936a"/>
-          <!-- Shaved head shading -->
-          <ellipse cx="0" cy="-88" rx="16" ry="10" fill="rgba(180,120,80,0.3)"/>
-          <!-- Eyes (closed, meditating) -->
-          <path d="M-8,-81 Q-5,-83 -2,-81" stroke="#5a3020" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <path d="M2,-81 Q5,-83 8,-81" stroke="#5a3020" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <!-- Serene smile -->
-          <path d="M-5,-75 Q0,-72 5,-75" stroke="#a06040" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-          <!-- Ear -->
-          <ellipse cx="-17" cy="-81" rx="3.5" ry="5" fill="#c4836a"/>
-          <ellipse cx="17" cy="-81" rx="3.5" ry="5" fill="#c4836a"/>
-          <!-- Breathing animation overlay -->
-          <animateTransform attributeName="transform" type="translate" values="300,265;300,263;300,265" dur="5s" repeatCount="indefinite"/>
-        </g>
-
-        <!-- Fireflies / motes (animated) -->
-        <g id="motes">
-          <circle cx="170" cy="180" r="2" fill="#f0e080" opacity="0">
-            <animate attributeName="opacity" values="0;0.8;0;0.6;0" dur="4.2s" repeatCount="indefinite" begin="0.5s"/>
-            <animate attributeName="cx" values="170;175;168;172;170" dur="4.2s" repeatCount="indefinite"/>
-            <animate attributeName="cy" values="180;170;165;175;180" dur="4.2s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="420" cy="170" r="1.8" fill="#f0e080" opacity="0">
-            <animate attributeName="opacity" values="0;0.7;0;0.9;0" dur="5.5s" repeatCount="indefinite" begin="1.2s"/>
-            <animate attributeName="cx" values="420;415;422;418;420" dur="5.5s" repeatCount="indefinite"/>
-            <animate attributeName="cy" values="170;160;155;165;170" dur="5.5s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="260" cy="200" r="1.5" fill="#f0e080" opacity="0">
-            <animate attributeName="opacity" values="0;0.6;0;0.8;0" dur="3.8s" repeatCount="indefinite" begin="2.0s"/>
-          </circle>
-          <circle cx="350" cy="185" r="2" fill="#d0f080" opacity="0">
-            <animate attributeName="opacity" values="0;0.5;0;0.7;0" dur="6s" repeatCount="indefinite" begin="0.8s"/>
-            <animate attributeName="cy" values="185;175;170;180;185" dur="6s" repeatCount="indefinite"/>
-          </circle>
-        </g>
-
-        <defs>
-          <linearGradient id="robeGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#fff" stop-opacity="0.3"/>
-            <stop offset="100%" stop-color="#000" stop-opacity="0.15"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-
-    <!-- ===== MAIN CONTENT ===== -->
     <div id="content-wrapper">
       <div class="site-layout">
         <aside class="site-sidebar" aria-label="Page navigation">
@@ -384,289 +24,106 @@
               <li><a href="research.html" class="site-nav-link">Research</a></li>
               <li><a href="buddhism-books-translation.html" class="site-nav-link">Buddhism books translation</a></li>
               <li><a href="photography.html" class="site-nav-link">Photography</a></li>
-              <li><a href="traditional-chinese-medicine.html" class="site-nav-link">Traditional chinese medicine</a></li>
+              <li><a href="traditional-chinese-medicine.html" class="site-nav-link">Traditional Chinese medicine</a></li>
             </ul>
           </nav>
         </aside>
-        <div class="site-main">
-          <!-- Header / bio -->
-          <div class="content-panel">
-            <p class="name">Linrui (Stephen) Tan &nbsp;谭林睿</p>
-            <div class="profile-container">
-              <div class="profile-text">
-                <p>
-                  Welcome to my webpage! I am a PhD student at <a href="https://www.rice.edu/">Rice University</a> from Prof. <a href="https://profiles.rice.edu/faculty/ashok-veeraraghavan">Ashok Veeraraghavan</a>'s group working on optics and computational imaging. I was an undergraduate student at the <a href="https://www.rochester.edu/">University of Rochester</a> working on metaoptics, fiber optics, and traditional imaging.
-                </p>
-                <div class="links">
-                  <a href="mailto:ltan13@u.rochester.edu">Email</a> &nbsp;/&nbsp;
-                  <a href="data/Resume_Linrui（Stephen） Tan.pdf">Resume</a> &nbsp;/&nbsp;
-                  <a href="https://scholar.google.com/citations?hl=zh-CN&user=gWU2aNUAAAAJ">Google Scholar</a> &nbsp;/&nbsp;
-                  <a href="https://www.linkedin.com/in/linrui-tan-stephen/">LinkedIn</a>
-                </div>
-              </div>
-              <div class="profile-img-wrap">
-                <a href="images/linruitan.jpg"><img src="images/linruitan.jpg" alt="profile photo"></a>
+
+        <main class="site-main">
+          <h1 class="name">Linrui (Stephen) Tan<span class="name-zh" lang="zh-CN">谭林睿</span></h1>
+
+          <div class="profile-container">
+            <div class="profile-text">
+              <p>
+                Welcome to my webpage! I am a PhD student at <a href="https://www.rice.edu/">Rice University</a> from Prof. <a href="https://profiles.rice.edu/faculty/ashok-veeraraghavan">Ashok Veeraraghavan</a>'s group working on optics and computational imaging. I was an undergraduate student at the <a href="https://www.rochester.edu/">University of Rochester</a> working on metaoptics, fiber optics, and traditional imaging.
+              </p>
+              <div class="links">
+                <a href="mailto:ltan13@u.rochester.edu">Email</a><span class="sep">/</span><a href="data/Resume_Linrui（Stephen） Tan.pdf">Resume</a><span class="sep">/</span><a href="https://scholar.google.com/citations?hl=zh-CN&amp;user=gWU2aNUAAAAJ">Google Scholar</a><span class="sep">/</span><a href="https://www.linkedin.com/in/linrui-tan-stephen/">LinkedIn</a>
               </div>
             </div>
-            <div class="home-photo-feature">
-              <figure>
-                <a href="photography.html"><img src="Photography/%E8%87%AA%E7%94%BB%E8%8F%A9%E8%90%A8.jpg" alt="Self-painted bodhisattva portrait, Hangzhou, June 2025"></a>
-                <figcaption>June 2025 · Hangzhou — 《自画菩萨》 <em>Self-Painted Bodhisattva</em>. <a href="photography.html">More photography →</a></figcaption>
-              </figure>
+            <div class="profile-img-wrap">
+              <a href="images/linruitan.jpg"><img src="images/linruitan.jpg" alt="Portrait of Linrui Tan"></a>
             </div>
           </div>
 
+          <div class="home-photo-feature">
+            <figure>
+              <a href="photography.html"><img src="Photography/%E8%87%AA%E7%94%BB%E8%8F%A9%E8%90%A8.jpg" alt="Self-painted bodhisattva portrait, Hangzhou, June 2025"></a>
+              <figcaption>June 2025 · Hangzhou — <span lang="zh-CN">《自画菩萨》</span> <em>Self-Painted Bodhisattva</em>. <a href="photography.html">More photography →</a></figcaption>
+            </figure>
+          </div>
+
           <footer>
-            Source code from <a href="https://github.com/jonbarron/jonbarron_website" style="border:none;">Jon Barron's website</a>.
-            &nbsp;·&nbsp; Zen background by Claude.
+            Source code from <a href="https://github.com/jonbarron/jonbarron_website">Jon Barron's website</a> · Zen background by Claude.
           </footer>
-        </div>
+        </main>
       </div>
     </div>
 
-    <script>
-    // ============================================================
-    //  ZEN CANVAS — sky, mist, birds
-    // ============================================================
-    const canvas = document.getElementById('zen-canvas');
-    const ctx = canvas.getContext('2d');
+    <!-- ===== THE MONK — its own band, its own layer ===== -->
+    <div id="monk-band">
+      <div class="monk-stage">
+        <figure id="zen-quote" aria-live="polite" aria-hidden="true" title="Click to let it go">
+          <span class="q-zh" lang="zh-CN"></span>
+          <span class="q-en"></span>
+          <span class="q-src"></span>
+        </figure>
 
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
+        <button id="monk-btn" type="button" aria-expanded="false" aria-controls="zen-quote" aria-label="A meditating monk — click for a line from the sutras">
+          <svg viewBox="-105 -118 210 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- ground: a single dry brush stroke -->
+            <path d="M-100 4 Q-40 1 0 3 T100 2" stroke="#221f1a" stroke-opacity="0.28" stroke-width="1.2" fill="none" stroke-linecap="round"/>
 
-    // --- Birds ---
-    class Bird {
-      constructor(delay = 0) {
-        this.reset(true);
-        this.t = delay;
-      }
-      reset(init = false) {
-        this.x = init ? Math.random() * window.innerWidth : -80;
-        this.y = 60 + Math.random() * (window.innerHeight * 0.35);
-        this.speed = 0.4 + Math.random() * 0.5;
-        this.scale = 0.5 + Math.random() * 0.6;
-        this.t = 0;
-        this.wingPhase = Math.random() * Math.PI * 2;
-        this.wingSpeed = 0.06 + Math.random() * 0.04;
-        this.opacity = 0.5 + Math.random() * 0.45;
-        this.yWave = 0.3 + Math.random() * 0.4;
-        this.yOrig = this.y;
-      }
-      update() {
-        this.t += 1;
-        this.x += this.speed;
-        this.y = this.yOrig + Math.sin(this.t * 0.018) * 12 * this.yWave;
-        this.wingPhase += this.wingSpeed;
-        if (this.x > window.innerWidth + 100) this.reset();
-      }
-      draw(ctx) {
-        const w = this.wingPhase;
-        const s = this.scale;
-        const wing = Math.sin(w) * 10 * s;
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.globalAlpha = this.opacity;
-        ctx.strokeStyle = '#2a3a20';
-        ctx.lineWidth = 1.4 * s;
-        ctx.lineCap = 'round';
-        // Body
-        ctx.beginPath();
-        ctx.moveTo(-6*s, 0);
-        ctx.quadraticCurveTo(0, 1*s, 6*s, 0);
-        ctx.stroke();
-        // Left wing
-        ctx.beginPath();
-        ctx.moveTo(-2*s, 0);
-        ctx.quadraticCurveTo(-10*s, -wing, -18*s, -wing*0.3);
-        ctx.stroke();
-        // Right wing
-        ctx.beginPath();
-        ctx.moveTo(2*s, 0);
-        ctx.quadraticCurveTo(10*s, -wing, 18*s, -wing*0.3);
-        ctx.stroke();
-        ctx.restore();
-      }
-    }
+            <!-- meditation cushion -->
+            <ellipse cx="0" cy="-2" rx="44" ry="7" fill="#3b3730" opacity="0.85"/>
 
-    const birds = Array.from({length: 14}, (_, i) => new Bird(i * 90));
+            <!-- the monk -->
+            <g>
+              <!-- crossed legs under the robe -->
+              <path d="M-42 -6 Q-40 -26 -16 -30 L16 -30 Q40 -26 42 -6 Q20 -1 0 -2 Q-20 -1 -42 -6 Z" fill="#a8662b"/>
+              <path d="M-34 -9 Q-16 -18 0 -16 Q16 -18 34 -9" stroke="#7d4a1d" stroke-opacity="0.55" stroke-width="1" fill="none"/>
+              <!-- upper body, breathing -->
+              <g>
+                <animateTransform attributeName="transform" type="translate" values="0 0; 0 -1.2; 0 0" dur="6s" repeatCount="indefinite"/>
+                <!-- torso -->
+                <path d="M-17 -30 Q-20 -58 -10 -66 L10 -66 Q20 -58 17 -30 Z" fill="#a8662b"/>
+                <!-- kasaya drape over the left shoulder -->
+                <path d="M-10 -66 Q2 -50 17 -32 L17 -38 Q8 -52 -2 -66 Z" fill="#8f531f" opacity="0.8"/>
+                <!-- hands resting in dhyāna mudrā -->
+                <ellipse cx="0" cy="-31" rx="11" ry="4.5" fill="#d9b08c"/>
+                <path d="M-6 -32 Q0 -36 6 -32" stroke="#b48a66" stroke-width="0.9" fill="none"/>
+                <!-- neck and head -->
+                <rect x="-4.5" y="-72" width="9" height="8" rx="3" fill="#d9b08c"/>
+                <ellipse cx="0" cy="-86" rx="14" ry="15" fill="#d9b08c"/>
+                <ellipse cx="-14" cy="-85" rx="2.4" ry="4" fill="#cfa47f"/>
+                <ellipse cx="14" cy="-85" rx="2.4" ry="4" fill="#cfa47f"/>
+                <!-- closed eyes, faint smile -->
+                <path d="M-7 -86 Q-4.5 -84.5 -2 -86" stroke="#4f3a2a" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+                <path d="M2 -86 Q4.5 -84.5 7 -86" stroke="#4f3a2a" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+                <path d="M-3 -79.5 Q0 -78 3 -79.5" stroke="#9a6e52" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+              </g>
+            </g>
 
-    // --- Mist particles ---
-    class MistPuff {
-      constructor() { this.reset(); }
-      reset() {
-        this.x = Math.random() * window.innerWidth;
-        this.y = window.innerHeight * (0.5 + Math.random() * 0.5);
-        this.r = 60 + Math.random() * 120;
-        this.opacity = 0.04 + Math.random() * 0.06;
-        this.speed = 0.08 + Math.random() * 0.12;
-        this.drift = (Math.random() - 0.5) * 0.04;
-      }
-      update() {
-        this.x += this.speed;
-        this.y += this.drift;
-        if (this.x - this.r > window.innerWidth) this.reset();
-      }
-      draw(ctx) {
-        const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
-        g.addColorStop(0, `rgba(245,242,235,${this.opacity})`);
-        g.addColorStop(1, 'rgba(245,242,235,0)');
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.ellipse(this.x, this.y, this.r, this.r * 0.5, 0, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
+            <!-- incense: a small bowl and one thread of smoke -->
+            <g transform="translate(72 0)">
+              <path d="M-9 -6 Q-9 0 0 0 Q9 0 9 -6 Z" fill="#3b3730" opacity="0.8"/>
+              <line x1="0" y1="-6" x2="0" y2="-26" stroke="#7d4a1d" stroke-width="1"/>
+              <circle cx="0" cy="-26" r="1.2" fill="#c86a2a"/>
+              <path d="M0 -28 C -4 -36, 4 -42, 0 -50 S -3 -62, 1 -70" stroke="#221f1a" stroke-opacity="0.22" stroke-width="1" fill="none" stroke-linecap="round">
+                <animate attributeName="d" dur="9s" repeatCount="indefinite"
+                  values="M0 -28 C -4 -36, 4 -42, 0 -50 S -3 -62, 1 -70;
+                          M0 -28 C 4 -36, -4 -44, 1 -52 S 4 -62, -2 -72;
+                          M0 -28 C -4 -36, 4 -42, 0 -50 S -3 -62, 1 -70"/>
+                <animate attributeName="stroke-opacity" dur="9s" repeatCount="indefinite" values="0.22;0.12;0.22"/>
+              </path>
+            </g>
+          </svg>
+        </button>
 
-    const mist = Array.from({length: 18}, () => new MistPuff());
+        <span class="monk-hint">click the monk</span>
+      </div>
+    </div>
 
-    // --- Falling leaves ---
-    class Leaf {
-      constructor() { this.reset(true); }
-      reset(init = false) {
-        this.x = Math.random() * window.innerWidth;
-        this.y = init ? Math.random() * window.innerHeight : -20;
-        this.size = 4 + Math.random() * 5;
-        this.speed = 0.4 + Math.random() * 0.5;
-        this.rot = Math.random() * Math.PI * 2;
-        this.rotSpeed = (Math.random() - 0.5) * 0.03;
-        this.swing = (Math.random() - 0.5) * 1.2;
-        this.swingSpeed = 0.01 + Math.random() * 0.02;
-        this.t = Math.random() * 100;
-        this.color = `rgba(${80+Math.floor(Math.random()*40)},${100+Math.floor(Math.random()*40)},${40+Math.floor(Math.random()*20)},${0.55+Math.random()*0.3})`;
-        this.opacity = 0.5 + Math.random() * 0.4;
-      }
-      update() {
-        this.t += 1;
-        this.y += this.speed;
-        this.x += Math.sin(this.t * this.swingSpeed) * this.swing;
-        this.rot += this.rotSpeed;
-        if (this.y > window.innerHeight + 20) this.reset();
-      }
-      draw(ctx) {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.rot);
-        ctx.globalAlpha = this.opacity;
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.ellipse(0, 0, this.size, this.size * 0.45, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(40,60,20,0.3)';
-        ctx.lineWidth = 0.5;
-        ctx.beginPath();
-        ctx.moveTo(-this.size, 0);
-        ctx.lineTo(this.size, 0);
-        ctx.stroke();
-        ctx.restore();
-      }
-    }
-
-    const leaves = Array.from({length: 22}, () => new Leaf());
-
-    function drawSky() {
-      const h = canvas.height;
-      const w = canvas.width;
-      // Sky gradient
-      const sky = ctx.createLinearGradient(0, 0, 0, h);
-      sky.addColorStop(0, '#b8cdd8');
-      sky.addColorStop(0.35, '#cddde5');
-      sky.addColorStop(0.65, '#d8e8d5');
-      sky.addColorStop(1, '#e8ede0');
-      ctx.fillStyle = sky;
-      ctx.fillRect(0, 0, w, h);
-
-      // Subtle mountain silhouette (ink-wash style)
-      ctx.save();
-      ctx.globalAlpha = 0.12;
-      // Far mountain
-      ctx.fillStyle = '#4a6050';
-      ctx.beginPath();
-      ctx.moveTo(0, h * 0.65);
-      ctx.quadraticCurveTo(w * 0.15, h * 0.35, w * 0.3, h * 0.55);
-      ctx.quadraticCurveTo(w * 0.45, h * 0.28, w * 0.6, h * 0.5);
-      ctx.quadraticCurveTo(w * 0.75, h * 0.38, w * 0.88, h * 0.55);
-      ctx.quadraticCurveTo(w, h * 0.45, w, h * 0.65);
-      ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath();
-      ctx.fill();
-      // Near mountain
-      ctx.globalAlpha = 0.1;
-      ctx.fillStyle = '#3a5040';
-      ctx.beginPath();
-      ctx.moveTo(0, h * 0.75);
-      ctx.quadraticCurveTo(w * 0.2, h * 0.5, w * 0.4, h * 0.7);
-      ctx.quadraticCurveTo(w * 0.55, h * 0.42, w * 0.7, h * 0.65);
-      ctx.quadraticCurveTo(w * 0.85, h * 0.52, w, h * 0.68);
-      ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    }
-
-    let frame = 0;
-    function loop() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawSky();
-      mist.forEach(m => { m.update(); m.draw(ctx); });
-      birds.forEach(b => { b.update(); b.draw(ctx); });
-      leaves.forEach(l => { l.update(); l.draw(ctx); });
-      frame++;
-      requestAnimationFrame(loop);
-    }
-    loop();
-
-    // ============================================================
-    //  ZEN QUOTES
-    // ============================================================
-    const quotes = [
-      { text: "The mind is everything. What you think, you become.", attr: "— Buddha" },
-      { text: "In the beginner's mind there are many possibilities. In the expert's mind there are few.", attr: "— Shunryu Suzuki" },
-      { text: "Do not dwell in the past, do not dream of the future. Concentrate the mind on the present moment.", attr: "— Buddha" },
-      { text: "Before enlightenment, chop wood, carry water. After enlightenment, chop wood, carry water.", attr: "— Zen Proverb" },
-      { text: "The quieter you become, the more you are able to hear.", attr: "— Rumi" },
-      { text: "Muddy water, let stand, becomes clear.", attr: "— Lao Tzu" },
-      { text: "When you reach the top of the mountain, keep climbing.", attr: "— Zen Proverb" },
-      { text: "To study the self is to forget the self.", attr: "— Dōgen" },
-      { text: "Flow with whatever may happen and let your mind be free. Stay centered by accepting whatever you are doing.", attr: "— Zhuangzi" },
-      { text: "The whole moon and the entire sky are reflected in one dewdrop on the grass.", attr: "— Dōgen" },
-      { text: "If you understand, things are just as they are. If you do not understand, things are just as they are.", attr: "— Zen Proverb" },
-      { text: "Let go of your mind and then be mindful. Close your ears and listen.", attr: "— Rumi" },
-      { text: "Sitting quietly, doing nothing, spring comes, and the grass grows by itself.", attr: "— Matsuo Bashō" },
-      { text: "Not thinking about anything is Zen. Once you know this, walking, sitting, or lying down, everything you do is Zen.", attr: "— Bodhidharma" },
-      { text: "The light that illuminates the universe also illuminates the mind of the meditator.", attr: "— Tibetan Proverb" },
-    ];
-
-    let lastQuote = -1;
-    let quoteTimer = null;
-    const quoteEl = document.getElementById('zen-quote');
-    const quoteText = document.getElementById('quote-text');
-    const quoteAttr = document.getElementById('quote-attr');
-    const hintEl = document.getElementById('zen-quote-hint');
-
-    function showQuote() {
-      let idx;
-      do { idx = Math.floor(Math.random() * quotes.length); } while (idx === lastQuote);
-      lastQuote = idx;
-      const q = quotes[idx];
-      quoteText.textContent = q.text;
-      quoteAttr.textContent = q.attr;
-      quoteEl.classList.add('visible');
-      hintEl.style.opacity = '0';
-      clearTimeout(quoteTimer);
-      quoteTimer = setTimeout(hideQuote, 7000);
-    }
-
-    function hideQuote() {
-      quoteEl.classList.remove('visible');
-      setTimeout(() => { hintEl.style.opacity = '1'; }, 1200);
-    }
-
-    document.getElementById('monk-scene').addEventListener('click', showQuote);
-
-    // Auto-show first quote after 3s
-    setTimeout(showQuote, 3000);
-    </script>
+    <script src="zen.js"></script>
   </body>
 </html>

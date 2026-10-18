@@ -1,214 +1,17 @@
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
     <title>Traditional Chinese Medicine | Linrui Tan</title>
     <meta name="description" content="Shang Han Lun (Treatise on Cold Damage) study notes: six-channel pattern analysis with English headings; downloadable Word and Excel sources.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="site-nav.css">
-    <style>
-      :root {
-        --ink: #1a1208;
-        --mist: rgba(240,235,220,0.88);
-        --paper: #f5f0e8;
-        --gold: #b8975a;
-        --moss: #4a5e3a;
-      }
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      body {
-        font-family: 'EB Garamond', Georgia, serif;
-        color: var(--ink);
-        min-height: 100vh;
-        background: var(--paper);
-      }
-      #zen-canvas {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        z-index: 0; pointer-events: none;
-      }
-      #content-wrapper {
-        position: relative; z-index: 5;
-        width: 100%; padding: 24px 0 80px;
-      }
-      .content-panel {
-        background: var(--mist);
-        backdrop-filter: blur(6px);
-        border-radius: 8px;
-        margin: 0;
-        padding: 28px 32px;
-        border: 1px solid rgba(184,151,90,0.18);
-        box-shadow: 0 2px 20px rgba(26,18,8,0.06);
-      }
-      p { font-size: 15px; line-height: 1.75; color: #2a220e; }
-      a { color: var(--moss); text-decoration: none; border-bottom: 1px dotted rgba(74,94,58,0.4); }
-      a:hover { color: var(--gold); border-color: var(--gold); }
-      .chapter-block { border-bottom: 1px solid rgba(184,151,90,0.12); }
-      .chapter-block .chapter-hint { border-bottom: none; }
-      footer {
-        text-align: center; font-size: 12px; color: rgba(26,18,8,0.4);
-        padding: 24px 16px 0;
-      }
-      .tcm-article {
-        font-family: 'Noto Serif SC', 'Songti SC', serif;
-        color: #2a220e;
-        line-height: 1.65;
-      }
-      .tcm-article .tcm-title {
-        text-align: center;
-        font-weight: 400;
-        font-size: 1.45rem;
-        color: var(--moss);
-        margin: 8px 0 16px;
-        line-height: 1.35;
-      }
-      .tcm-title-en {
-        display: block;
-        font-family: 'EB Garamond', Georgia, serif;
-        font-size: 0.72em;
-        font-weight: 400;
-        font-style: italic;
-        color: rgba(42, 34, 14, 0.78);
-        margin-top: 10px;
-        letter-spacing: 0.02em;
-      }
-      .tcm-article .note {
-        color: rgba(42, 34, 14, 0.75);
-        font-size: 13px;
-        margin-bottom: 20px;
-        padding: 12px 14px;
-        background: rgba(255,255,255,0.45);
-        border-radius: 6px;
-        border-left: 3px solid rgba(184,151,90,0.5);
-      }
-      .tcm-note-en {
-        display: block;
-        margin-top: 10px;
-        font-family: 'EB Garamond', Georgia, serif;
-        font-size: 13px;
-        line-height: 1.55;
-      }
-      .tcm-h2 {
-        font-size: 1.2rem;
-        font-weight: 500;
-        color: var(--moss);
-        margin: 28px 0 10px;
-        padding-top: 8px;
-        border-top: 1px solid rgba(184,151,90,0.2);
-      }
-      .tcm-h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
-      .tcm-h2 .tcm-en {
-        display: block;
-        font-family: 'EB Garamond', Georgia, serif;
-        font-size: 0.78em;
-        font-weight: 400;
-        font-style: italic;
-        color: rgba(74, 94, 58, 0.85);
-        margin-top: 4px;
-      }
-      .tcm-h3 {
-        font-size: 1.02rem;
-        font-weight: 500;
-        color: #3d4a32;
-        margin: 18px 0 8px;
-      }
-      .tcm-h3 .tcm-en {
-        display: block;
-        font-family: 'EB Garamond', Georgia, serif;
-        font-size: 0.82em;
-        font-weight: 400;
-        font-style: italic;
-        color: rgba(42, 34, 14, 0.72);
-        margin-top: 2px;
-      }
-      .tcm-h4 {
-        font-size: 0.95rem;
-        font-weight: 500;
-        color: #4a5e3a;
-        margin: 16px 0 6px;
-      }
-      .tcm-h4 .tcm-en {
-        display: block;
-        font-family: 'EB Garamond', Georgia, serif;
-        font-size: 0.85em;
-        font-weight: 400;
-        font-style: italic;
-        color: rgba(42, 34, 14, 0.68);
-        margin-top: 2px;
-      }
-      .tcm-article ul {
-        margin: 6px 0 14px 1.2em;
-        font-size: 14px;
-      }
-      .tcm-article li { margin: 4px 0; }
-      .tcm-table-wrap {
-        overflow-x: auto;
-        margin: 10px 0 20px;
-        -webkit-overflow-scrolling: touch;
-      }
-      .tcm-table {
-        border-collapse: collapse;
-        width: 100%;
-        min-width: 720px;
-        font-size: 12px;
-        background: rgba(255,255,255,0.35);
-      }
-      .tcm-table th, .tcm-table td {
-        border: 1px solid rgba(102, 102, 102, 0.35);
-        padding: 7px 8px;
-        vertical-align: top;
-      }
-      .tcm-table th {
-        background: rgba(238, 243, 248, 0.85);
-        font-weight: 600;
-      }
-      .tcm-th-en {
-        display: block;
-        font-family: 'EB Garamond', Georgia, serif;
-        font-size: 10px;
-        font-weight: 400;
-        font-style: italic;
-        color: rgba(42, 34, 14, 0.65);
-        margin-top: 3px;
-      }
-      .tcm-summary-en {
-        display: block;
-        font-family: 'EB Garamond', Georgia, serif;
-        font-size: 13px;
-        font-style: italic;
-        color: rgba(42, 34, 14, 0.75);
-        margin-top: 6px;
-        line-height: 1.5;
-      }
-      .tcm-category-intro {
-        background: rgba(255,255,255,0.3);
-        padding: 10px 12px;
-        margin: 8px 0 12px;
-        border-radius: 4px;
-        font-size: 13px;
-        color: rgba(42, 34, 14, 0.85);
-        border-left: 2px solid rgba(74, 94, 58, 0.4);
-      }
-      .tcm-downloads-heading {
-        font-family: 'Noto Serif SC', serif;
-        font-size: 1.05rem;
-        color: var(--moss);
-        margin: 36px 0 8px;
-        padding-top: 20px;
-        border-top: 1px solid rgba(184,151,90,0.25);
-      }
-      .tcm-downloads-sub {
-        font-family: 'EB Garamond', Georgia, serif;
-        font-size: 14px;
-        color: rgba(42, 34, 14, 0.7);
-        margin-bottom: 12px;
-      }
-      @media (max-width: 600px) { .content-panel { padding: 20px 16px; } }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="zen.css">
   </head>
   <body>
-    <canvas id="zen-canvas"></canvas>
+    <canvas id="zen-canvas" aria-hidden="true"></canvas>
     <div id="content-wrapper">
       <div class="site-layout">
         <aside class="site-sidebar" aria-label="Page navigation">
@@ -218,14 +21,14 @@
               <li><a href="research.html" class="site-nav-link">Research</a></li>
               <li><a href="buddhism-books-translation.html" class="site-nav-link">Buddhism books translation</a></li>
               <li><a href="photography.html" class="site-nav-link">Photography</a></li>
-              <li><a href="traditional-chinese-medicine.html" class="site-nav-link" aria-current="page">Traditional chinese medicine</a></li>
+              <li><a href="traditional-chinese-medicine.html" class="site-nav-link" aria-current="page">Traditional Chinese medicine</a></li>
             </ul>
           </nav>
         </aside>
         <div class="site-main">
           <div class="content-panel">
             <h2 class="section-heading">Traditional Chinese Medicine</h2>
-            <p style="margin-bottom: 18px;">Study notes on classical Chinese medicine. The article below follows the six-channel structure (symptoms, pathomechanisms, formulas); headings and table columns are given in English as well. Source files for editing are linked at the end.</p>
+            <p>Study notes on classical Chinese medicine. The article below follows the six-channel structure (symptoms, pathomechanisms, formulas); headings and table columns are given in English as well. Source files for editing are linked at the end.</p>
             <article class="tcm-article" lang="zh-CN">
 <h1 class="tcm-title"><span class="tcm-zh" lang="zh-CN">《伤寒论》六经辨证分析整理</span><span class="tcm-title-en" lang="en">Treatise on Cold Damage (Shang Han Lun) — Six-channel pattern analysis</span></h1>
 <p class="note"><span class="tcm-zh" lang="zh-CN">说明：本整理主要做文献与表格内容归纳，不作为临床处方建议。</span><span class="tcm-note-en" lang="en">Note: This is a scholarly summary of source tables and texts, not clinical prescribing advice.</span></p>
@@ -481,29 +284,11 @@
             </a>
           </div>
           <footer>
-            <a href="index.html" style="border:none;">Home</a>
+            <a href="index.html">Home</a>
           </footer>
         </div>
       </div>
     </div>
-    <script>
-      const canvas = document.getElementById('zen-canvas');
-      const ctx = canvas.getContext('2d');
-      function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-      resize();
-      window.addEventListener('resize', resize);
-      function drawSky() {
-        const h = canvas.height, w = canvas.width;
-        const sky = ctx.createLinearGradient(0, 0, 0, h);
-        sky.addColorStop(0, '#b8cdd8');
-        sky.addColorStop(0.35, '#cddde5');
-        sky.addColorStop(0.65, '#d8e8d5');
-        sky.addColorStop(1, '#e8ede0');
-        ctx.fillStyle = sky;
-        ctx.fillRect(0, 0, w, h);
-      }
-      function loop() { drawSky(); requestAnimationFrame(loop); }
-      loop();
-    </script>
+    <script src="zen.js"></script>
   </body>
 </html>

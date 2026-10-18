@@ -1,85 +1,17 @@
 <!DOCTYPE HTML>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
     <title>Research &amp; Projects | Linrui Tan</title>
     <meta name="description" content="Research projects in optics, computational imaging, and related work by Linrui (Stephen) Tan.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="site-nav.css">
-    <style>
-      :root {
-        --ink: #1a1208;
-        --mist: rgba(240,235,220,0.88);
-        --paper: #f5f0e8;
-        --gold: #b8975a;
-        --moss: #4a5e3a;
-      }
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      body {
-        font-family: 'EB Garamond', Georgia, serif;
-        color: var(--ink);
-        min-height: 100vh;
-        background: var(--paper);
-      }
-      #zen-canvas {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        z-index: 0; pointer-events: none;
-      }
-      #content-wrapper {
-        position: relative; z-index: 5;
-        width: 100%; padding: 24px 0 120px;
-      }
-      .content-panel {
-        background: var(--mist);
-        backdrop-filter: blur(6px);
-        border-radius: 8px;
-        margin: 0;
-        padding: 28px 32px;
-        border: 1px solid rgba(184,151,90,0.18);
-        box-shadow: 0 2px 20px rgba(26,18,8,0.06);
-      }
-      p { font-size: 15px; line-height: 1.75; color: #2a220e; }
-      a { color: var(--moss); text-decoration: none; border-bottom: 1px dotted rgba(74,94,58,0.4); }
-      a:hover { color: var(--gold); border-color: var(--gold); }
-      .project-row {
-        display: flex;
-        gap: 20px;
-        padding: 20px 0;
-        border-bottom: 1px solid rgba(184,151,90,0.12);
-        align-items: flex-start;
-      }
-      .project-row:last-child { border-bottom: none; }
-      .project-img { flex-shrink: 0; width: 120px; }
-      .project-img img {
-        width: 120px;
-        border-radius: 6px;
-        display: block;
-        margin-bottom: 6px;
-        border: 1px solid rgba(184,151,90,0.2);
-      }
-      .project-org {
-        font-size: 13px;
-        color: var(--gold);
-        letter-spacing: 0.05em;
-        display: block;
-        margin-bottom: 8px;
-      }
-      .project-desc { font-size: 13px; line-height: 1.6; }
-      footer {
-        text-align: center; font-size: 12px; color: rgba(26,18,8,0.4);
-        padding: 24px 16px 0;
-      }
-      @media (max-width: 600px) {
-        .content-panel { padding: 20px 16px; }
-        .project-row { flex-direction: column; }
-      }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="zen.css">
   </head>
   <body>
-    <canvas id="zen-canvas"></canvas>
+    <canvas id="zen-canvas" aria-hidden="true"></canvas>
     <div id="content-wrapper">
       <div class="site-layout">
         <aside class="site-sidebar" aria-label="Page navigation">
@@ -89,7 +21,7 @@
               <li><a href="research.html" class="site-nav-link" aria-current="page">Research</a></li>
               <li><a href="buddhism-books-translation.html" class="site-nav-link">Buddhism books translation</a></li>
               <li><a href="photography.html" class="site-nav-link">Photography</a></li>
-              <li><a href="traditional-chinese-medicine.html" class="site-nav-link">Traditional chinese medicine</a></li>
+              <li><a href="traditional-chinese-medicine.html" class="site-nav-link">Traditional Chinese medicine</a></li>
             </ul>
           </nav>
         </aside>
@@ -159,42 +91,24 @@
             </div>
 
             <div class="project-row">
-              <div class="project-img" style="display:flex;align-items:center;justify-content:center;height:60px;">
-                <span style="font-size:28px;">🌿</span>
+              <div class="project-img">
+                <svg class="enso" viewBox="0 0 56 56" aria-hidden="true"><path d="M30 6 C 14 5, 5 17, 6 29 C 7 43, 20 51, 32 49 C 44 47, 51 36, 49 24 C 48 17, 44 12, 39 9" fill="none" stroke="#221f1a" stroke-opacity="0.7" stroke-width="3.2" stroke-linecap="round"/></svg>
               </div>
               <div>
-                <span class="project-title" style="color:var(--moss);">Volunteer &amp; Mentoring</span>
+                <span class="project-title">Volunteer &amp; Mentoring</span>
                 <span class="project-org">THE AGGY PROJECT; Buddhist Student Association</span>
                 <p class="project-desc">As an advisor for THE AGGY PROJECT, mentored high school students on education pathways and research. As Event Chair of the Buddhist Student Association, organized dharma studies, meditation sessions, temple trips, and interfaith collaborations.</p>
               </div>
             </div>
           </div>
           <footer>
-            <a href="index.html" style="border:none;">Home</a>
+            <a href="index.html">Home</a>
             &nbsp;·&nbsp;
-            Source code from <a href="https://github.com/jonbarron/jonbarron_website" style="border:none;">Jon Barron's website</a>.
+            Source code from <a href="https://github.com/jonbarron/jonbarron_website">Jon Barron's website</a>.
           </footer>
         </div>
       </div>
     </div>
-    <script>
-      const canvas = document.getElementById('zen-canvas');
-      const ctx = canvas.getContext('2d');
-      function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-      resize();
-      window.addEventListener('resize', resize);
-      function drawSky() {
-        const h = canvas.height, w = canvas.width;
-        const sky = ctx.createLinearGradient(0, 0, 0, h);
-        sky.addColorStop(0, '#b8cdd8');
-        sky.addColorStop(0.35, '#cddde5');
-        sky.addColorStop(0.65, '#d8e8d5');
-        sky.addColorStop(1, '#e8ede0');
-        ctx.fillStyle = sky;
-        ctx.fillRect(0, 0, w, h);
-      }
-      function loop() { drawSky(); requestAnimationFrame(loop); }
-      loop();
-    </script>
+    <script src="zen.js"></script>
   </body>
 </html>
