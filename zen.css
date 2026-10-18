@@ -53,6 +53,43 @@ body {
   pointer-events: none;
 }
 
+/* ---------- The opening (first visit of a session; driven by zen.js) ---------- */
+#zen-canvas { transform-origin: 50% 62%; will-change: transform; }
+
+#zen-intro {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;            /* skipping is handled on the window */
+}
+
+/* Before the overlay is painted: closed eyes, so nothing flashes */
+html.zen-intro::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 101;
+  background: #16130f;
+  animation: zen-failsafe 0.6s ease 7s forwards;
+}
+html.zen-intro.zen-ready::after { display: none; }
+
+/* Page content waits behind the closed eyes, then fades in as they open */
+html.zen-intro #content-wrapper,
+html.zen-intro #monk-band .monk-stage {
+  opacity: 0;
+  animation: zen-failsafe-show 0.8s ease 7s forwards;   /* if the script never runs */
+}
+html.zen-intro.zen-reveal #content-wrapper,
+html.zen-intro.zen-reveal #monk-band .monk-stage {
+  opacity: 1;
+  transition: opacity 1.8s ease;
+}
+@keyframes zen-failsafe      { to { opacity: 0; visibility: hidden; } }
+@keyframes zen-failsafe-show { to { opacity: 1; } }
+
 /* ---------- Links ---------- */
 a {
   color: var(--ink);
