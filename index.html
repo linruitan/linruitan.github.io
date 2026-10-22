@@ -6,56 +6,133 @@
     <meta name="description" content="PhD student at Rice University in Prof. Ashok Veeraraghavan's group working on optics and computational imaging.">
     <meta name="author" content="Linrui (Stephen) Tan">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>/* day or night, as last chosen; otherwise the system's */try{var t=localStorage.getItem('zen-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
     <script>/* the opening: home page only, and only if the visit begins here; see zen.js */try{if(!sessionStorage.getItem('zen-entered')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('zen-intro')}catch(e){}</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="zen.css">
   </head>
 
   <body>
     <canvas id="zen-canvas" aria-hidden="true"></canvas>
+    <!-- ===== Top bar: liquid glass (琉璃); slides away while you read, returns when you scroll up ===== -->
+    <header class="topbar" id="topbar">
+      <div class="topbar-glass">
+        <a class="brand" href="index.html"><span class="brand-dot" aria-hidden="true"></span>LINRUI&nbsp;TAN</a>
+        <nav class="topbar-nav" id="topbar-nav" aria-label="Site pages">
+            <a href="index.html" class="topbar-link" aria-current="page">Home</a>
+            <a href="research.html" class="topbar-link">Research</a>
+            <a href="buddhism-books-translation.html" class="topbar-link">Buddhism Translation</a>
+            <a href="photography.html" class="topbar-link">Photography</a>
+            <a href="traditional-chinese-medicine.html" class="topbar-link">Chinese Medicine</a>
+        </nav>
+        <div class="topbar-tools">
+          <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+            <svg class="moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 1.6a6.6 6.6 0 1 0 3.6 10.2A5.6 5.6 0 0 1 10.8 1.6Z" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
+            <svg class="sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6 13 13M3 13l1.4-1.4M11.6 4.4 13 3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            <span class="theme-label">Night</span>
+          </button>
+          <button class="menu-btn" type="button" aria-expanded="false" aria-controls="topbar-nav" aria-label="Open menu">
+            <span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
 
     <div id="content-wrapper">
       <div class="site-layout">
-        <aside class="site-sidebar" aria-label="Page navigation">
-          <nav class="site-nav" aria-label="Site pages">
-            <ul class="site-nav-list">
-              <li><a href="index.html" class="site-nav-link" aria-current="page">Home</a></li>
-              <li><a href="research.html" class="site-nav-link">Research</a></li>
-              <li><a href="buddhism-books-translation.html" class="site-nav-link">Buddhism books translation</a></li>
-              <li><a href="photography.html" class="site-nav-link">Photography</a></li>
-              <li><a href="traditional-chinese-medicine.html" class="site-nav-link">Traditional Chinese medicine</a></li>
-            </ul>
-          </nav>
-        </aside>
 
         <main class="site-main">
-          <h1 class="name">Linrui (Stephen) Tan<span class="name-zh" lang="zh-CN">谭林睿</span></h1>
+          <!-- ===== Hero ===== -->
+          <section class="hero" aria-labelledby="hero-name">
+            <p class="eyebrow">ECE PhD Student · Rice University</p>
+            <h1 class="hero-name" id="hero-name">Linrui <span class="it">Tan</span><span class="hero-zh" lang="zh-CN">谭林睿</span></h1>
+            <p class="tagline">Working on <b>optics</b> and <b>computational imaging</b>, from metasurfaces and fiber photonics to <b>stress-aware AI</b> that listens.</p>
+            <div class="cta">
+              <a class="pill pill--solid" href="mailto:ltan13@u.rochester.edu"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.8" y="3.3" width="12.4" height="9.4" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="m2.4 4.2 5.6 4.4 5.6-4.4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Email</a>
+              <a class="pill" href="https://scholar.google.com/citations?hl=zh-CN&amp;user=gWU2aNUAAAAJ">Google Scholar</a>
+              <a class="pill" href="https://github.com/linruitan">GitHub</a>
+              <a class="pill" href="https://www.linkedin.com/in/linrui-tan-stephen/">LinkedIn</a>
+              <a class="pill" href="data/Resume_Linrui（Stephen） Tan.pdf">CV <span aria-hidden="true">↗</span></a>
+            </div>
+            <p class="hero-meta">Houston, TX · Computational Imaging Group, Rice ECE</p>
+          </section>
 
-          <div class="profile-container">
-            <div class="profile-text">
-              <p>
-                Welcome to my webpage! I am a PhD student at <a href="https://www.rice.edu/">Rice University</a> from Prof. <a href="https://profiles.rice.edu/faculty/ashok-veeraraghavan">Ashok Veeraraghavan</a>'s group working on optics and computational imaging. I was an undergraduate student at the <a href="https://www.rochester.edu/">University of Rochester</a> working on metaoptics, fiber optics, and traditional imaging.
-              </p>
-              <div class="links">
-                <a href="mailto:ltan13@u.rochester.edu">Email</a><span class="sep">/</span><a href="data/Resume_Linrui（Stephen） Tan.pdf">Resume</a><span class="sep">/</span><a href="https://scholar.google.com/citations?hl=zh-CN&amp;user=gWU2aNUAAAAJ">Google Scholar</a><span class="sep">/</span><a href="https://www.linkedin.com/in/linrui-tan-stephen/">LinkedIn</a>
+          <!-- ===== 01 About ===== -->
+          <section class="sec" id="about">
+            <div class="sec-head">
+              <p class="sec-label"><span class="num">01</span>About</p>
+              <h2 class="sec-title">Seeing more with <span class="it">light.</span></h2>
+            </div>
+            <div class="about-grid">
+              <div class="bio">
+                <p>Welcome to my webpage! I am a PhD student at <a href="https://www.rice.edu/">Rice University</a> in Prof. <a href="https://profiles.rice.edu/faculty/ashok-veeraraghavan">Ashok Veeraraghavan</a>'s group, working on optics and computational imaging.</p>
+                <p>I was an undergraduate at the <a href="https://www.rochester.edu/">University of Rochester</a>, working on metaoptics, fiber optics, and traditional imaging. Outside the lab I translate the <a href="buddhism-books-translation.html">Lotus Sutra</a>, take <a href="photography.html">photographs</a>, and study <a href="traditional-chinese-medicine.html">classical Chinese medicine</a>.</p>
               </div>
+              <aside class="facts" aria-label="At a glance">
+                <img class="facts-portrait" src="images/linruitan.jpg" alt="Portrait of Linrui Tan">
+                <p class="k">Affiliation</p>
+                <p class="v"><b>Rice University</b>, ECE · Computational Imaging Group</p>
+                <p class="k">Advisor</p>
+                <p class="v"><b>Prof. Ashok Veeraraghavan</b></p>
+                <p class="k">Previously</p>
+                <p class="v"><b>University of Rochester</b> · Boston University (research)</p>
+              </aside>
             </div>
-            <div class="profile-img-wrap">
-              <a href="images/linruitan.jpg"><img src="images/linruitan.jpg" alt="Portrait of Linrui Tan"></a>
-            </div>
-          </div>
+          </section>
 
-          <div class="home-photo-feature">
-            <figure>
-              <a href="photography.html"><img src="Photography/%E8%87%AA%E7%94%BB%E8%8F%A9%E8%90%A8.jpg" alt="Self-painted bodhisattva portrait, Hangzhou, June 2025"></a>
-              <figcaption>June 2025 · Hangzhou — <span lang="zh-CN">《自画菩萨》</span> <em>Self-Painted Bodhisattva</em>. <a href="photography.html">More photography →</a></figcaption>
-            </figure>
-          </div>
+          <!-- ===== 02 Selected work: a ruled list, venue on the left ===== -->
+          <section class="sec" id="work">
+            <div class="sec-head">
+              <p class="sec-label"><span class="num">02</span>Selected Work</p>
+              <h2 class="sec-title">Light, signals &amp; <span class="it">minds.</span></h2>
+            </div>
+            <div class="pubs">
+              <article class="pub">
+                <p class="pub-venue">ACII<span class="yr">2026</span></p>
+                <div>
+                  <h3 class="pub-title"><a href="https://ieeexplore.ieee.org/document/11712105">MindCare: A Hybrid Multi-Agent Architecture for Stress-Aware Conversational Support</a></h3>
+                  <p class="pub-auth"><span class="me">Linrui Tan</span>, Shouyu Wang, Junen Xiao, Yifan Zhou, Akane Sano</p>
+                  <p class="pub-links"><a href="https://ieeexplore.ieee.org/document/11712105">Paper</a><a href="https://github.com/linruitan/Conversational-Based-Mental-Health-Chatbot">Code</a></p>
+                </div>
+              </article>
+              <article class="pub">
+                <p class="pub-venue">bioRxiv<span class="yr">2026</span></p>
+                <div>
+                  <h3 class="pub-title"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13060285/">Fiber Optical Parametric Amplification of Low-Photon-Flux Microscopy Signals</a></h3>
+                  <p class="pub-auth">J. Demas, <span class="me">L. Tan</span>, S. Ramachandran</p>
+                  <p class="pub-links"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13060285/">Paper</a></p>
+                </div>
+              </article>
+              <article class="pub">
+                <p class="pub-venue">Project<span class="yr">Rochester</span></p>
+                <div>
+                  <h3 class="pub-title"><a href="research.html#topic=metaoptics">Angle-Insensitive Plasmonic Metasurfaces for Spectral Imaging</a></h3>
+                  <p class="pub-auth"><span class="me">Linrui Tan</span> · with Prof. Cotrufo</p>
+                  <p class="pub-links"><a href="https://github.com/linruitan/linruitan.github.io/tree/main/angle-insensitive%20plasmonic%20metasurface">Code</a></p>
+                </div>
+              </article>
+            </div>
+            <p class="more"><a href="research.html">All research &amp; projects <span aria-hidden="true">→</span></a></p>
+          </section>
+
+          <!-- ===== 03 Lately ===== -->
+          <section class="sec" id="lately">
+            <div class="sec-head">
+              <p class="sec-label"><span class="num">03</span>Lately</p>
+              <h2 class="sec-title">Off the <span class="it">bench.</span></h2>
+            </div>
+            <div class="home-photo-feature">
+              <figure>
+                <a href="photography.html"><img src="Photography/%E8%87%AA%E7%94%BB%E8%8F%A9%E8%90%A8.jpg" alt="Self-painted bodhisattva portrait, Hangzhou, June 2025" loading="lazy"></a>
+                <figcaption>June 2025 · Hangzhou — <span lang="zh-CN">《自画菩萨》</span> <em>Self-Painted Bodhisattva</em>. <a href="photography.html">More photography →</a></figcaption>
+              </figure>
+            </div>
+          </section>
 
           <footer>
-            Source code from <a href="https://github.com/jonbarron/jonbarron_website">Jon Barron's website</a> · Zen background by Claude.
+            Source code from <a href="https://github.com/jonbarron/jonbarron_website">Jon Barron's website</a>; layout ideas from <a href="https://hliang2.github.io/">Hao Liang's</a> · Zen background by Claude.
           </footer>
         </main>
       </div>

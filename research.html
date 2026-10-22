@@ -5,99 +5,167 @@
     <title>Research &amp; Projects | Linrui Tan</title>
     <meta name="description" content="Research projects in optics, computational imaging, and related work by Linrui (Stephen) Tan.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>/* day or night, as last chosen; otherwise the system's */try{var t=localStorage.getItem('zen-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="zen.css">
   </head>
   <body>
     <canvas id="zen-canvas" aria-hidden="true"></canvas>
+    <!-- ===== Top bar: liquid glass (琉璃); slides away while you read, returns when you scroll up ===== -->
+    <header class="topbar" id="topbar">
+      <div class="topbar-glass">
+        <a class="brand" href="index.html"><span class="brand-dot" aria-hidden="true"></span>LINRUI&nbsp;TAN</a>
+        <nav class="topbar-nav" id="topbar-nav" aria-label="Site pages">
+            <a href="index.html" class="topbar-link">Home</a>
+            <a href="research.html" class="topbar-link" aria-current="page">Research</a>
+            <a href="buddhism-books-translation.html" class="topbar-link">Buddhism Translation</a>
+            <a href="photography.html" class="topbar-link">Photography</a>
+            <a href="traditional-chinese-medicine.html" class="topbar-link">Chinese Medicine</a>
+        </nav>
+        <div class="topbar-tools">
+          <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+            <svg class="moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 1.6a6.6 6.6 0 1 0 3.6 10.2A5.6 5.6 0 0 1 10.8 1.6Z" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></svg>
+            <svg class="sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6 13 13M3 13l1.4-1.4M11.6 4.4 13 3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            <span class="theme-label">Night</span>
+          </button>
+          <button class="menu-btn" type="button" aria-expanded="false" aria-controls="topbar-nav" aria-label="Open menu">
+            <span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
     <div id="content-wrapper">
       <div class="site-layout">
-        <aside class="site-sidebar" aria-label="Page navigation">
-          <nav class="site-nav" aria-label="Site pages">
-            <ul class="site-nav-list">
-              <li><a href="index.html" class="site-nav-link">Home</a></li>
-              <li><a href="research.html" class="site-nav-link" aria-current="page">Research</a></li>
-              <li><a href="buddhism-books-translation.html" class="site-nav-link">Buddhism books translation</a></li>
-              <li><a href="photography.html" class="site-nav-link">Photography</a></li>
-              <li><a href="traditional-chinese-medicine.html" class="site-nav-link">Traditional Chinese medicine</a></li>
-            </ul>
-          </nav>
-        </aside>
         <div class="site-main">
           <div class="content-panel">
+            <p class="eyebrow">Publications · Projects</p>
             <h2 class="section-heading">Research &amp; Projects</h2>
+            <p class="page-intro">Optics, computational imaging, and AI for wellbeing. Hover over a preview to see it move.</p>
 
-            <div class="project-row">
-              <div class="project-img">
-                <a href="https://github.com/linruitan/Conversational-Based-Mental-Health-Chatbot/tree/main">
-                  <img src="images/Chatbot_stress.png" alt="Chatbot stress router UI">
-                </a>
-              </div>
-              <div>
-                <a href="https://github.com/linruitan/Conversational-Based-Mental-Health-Chatbot/tree/main">
-                  <span class="project-title">LLM-Based Conversational Agent for Mental Health Support</span>
-                </a>
-                <span class="project-org">Rice University, Computational Wellbeing Lab</span>
-                <p class="project-desc">Built a stress-aware conversational agent that routes each user message through a calibrated SVC stress classifier and then to one of two Gemini-based assistants. The system logs every turn for analysis and is implemented as a Gradio web app.</p>
-              </div>
+            <!-- Icons used by the buttons below -->
+            <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+              <symbol id="i-paper" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13 M6 8h5 M6 10.5h5" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+              <symbol id="i-code" viewBox="0 0 16 16"><path d="M5.5 4.5 2 8l3.5 3.5 M10.5 4.5 14 8l-3.5 3.5 M9 3 7 13" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+              <symbol id="i-globe" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.15"/><path d="M1.8 8h12.4 M8 1.8c2 2 2 10.4 0 12.4 M8 1.8c-2 2-2 10.4 0 12.4" fill="none" stroke="currentColor" stroke-width="1.15"/></symbol>
+              <symbol id="i-play" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.15"/><path d="M6.6 5.4v5.2L10.8 8z" fill="currentColor"/></symbol>
+              <symbol id="i-book" viewBox="0 0 16 16"><path d="M2.5 3c2-.6 3.8-.4 5.5.8 1.7-1.2 3.5-1.4 5.5-.8v10c-2-.6-3.8-.4-5.5.8-1.7-1.2-3.5-1.4-5.5-.8z M8 3.8v10" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linejoin="round"/></symbol>
+            </svg>
+
+            <!-- Topic filter: buttons are matched against each card's data-tags.
+                 To add a topic, add a button here and the same word to the cards' data-tags. -->
+            <div class="rfilter" role="toolbar" aria-label="Filter by topic">
+              <button type="button" class="rchip" data-filter="all" aria-pressed="true">All</button>
+              <button type="button" class="rchip" data-filter="ai" aria-pressed="false">AI &amp; HCI</button>
+              <button type="button" class="rchip" data-filter="imaging" aria-pressed="false">Computational Imaging</button>
+              <button type="button" class="rchip" data-filter="photonics" aria-pressed="false">Photonics</button>
+              <button type="button" class="rchip" data-filter="metaoptics" aria-pressed="false">Metaoptics</button>
             </div>
 
-            <div class="project-row">
-              <div class="project-img">
-                <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13060285/">
-                  <img src="images/Parametric amplification.png" alt="Parametric amplification system">
+            <!--
+              ===== Card template: copy one <article> per paper or project =====
+              data-tags      topics for the filter, space-separated
+              .rcard-media   poster image; add ONE optional hover layer:
+                               <video class="rcard-hover" data-src="clip.mp4" data-src-webm="clip.webm" muted loop playsinline preload="none"></video>
+                               <img   class="rcard-hover" data-src="second-image-or.gif" alt="">
+              .venue         venue tag; add  venue--conf | venue--journal | venue--preprint | venue--project
+              .venue-note    optional: Oral, Spotlight, Best Paper, Late-Breaking Results …
+              .me            wraps your own name in the author list, so it is highlighted
+              .rbtn          buttons: Paper (#i-paper) · Code (#i-code) · Project Page (#i-globe) · Video (#i-play) · Reference (#i-book)
+            -->
+            <div class="rcards" id="rcards">
+
+              <article class="rcard" data-tags="ai">
+                <a class="rcard-media" href="https://ieeexplore.ieee.org/document/11712105" tabindex="-1" aria-hidden="true">
+                  <img class="rcard-poster rcard-poster--contain" src="images/Chatbot_stress.png" alt="" loading="lazy">
                 </a>
-              </div>
-              <div>
-                <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13060285/">
-                  <span class="project-title">High Bandwidth Detection in Photon-Starved Environments Using Parametric Optical Amplification</span>
+                <div class="rcard-body">
+                  <div class="rcard-meta">
+                    <span class="venue venue--conf">ACII 2026</span>
+                    <span class="venue-note">Late-Breaking Results</span>
+                  </div>
+                  <h3 class="rcard-title"><a href="https://ieeexplore.ieee.org/document/11712105">MindCare: A Hybrid Multi-Agent Architecture for Stress-Aware Conversational Support</a></h3>
+                  <p class="rcard-authors"><span class="me">Linrui Tan</span>, Shouyu Wang, Junen Xiao, Yifan Zhou, Akane Sano</p>
+                  <p class="rcard-org">Rice University, Computational Wellbeing Lab</p>
+                  <p class="rcard-desc">A stress-aware conversational agent: a calibrated SVC stress classifier routes each message to one of two Gemini-based assistants, a grounding companion for stressful moments and an encouraging one for calm ones, and every turn is logged for analysis.</p>
+                  <div class="rcard-links">
+                    <a class="rbtn" href="https://ieeexplore.ieee.org/document/11712105"><svg aria-hidden="true"><use href="#i-paper"/></svg>Paper</a>
+                    <a class="rbtn" href="https://github.com/linruitan/Conversational-Based-Mental-Health-Chatbot"><svg aria-hidden="true"><use href="#i-code"/></svg>Code</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="rcard" data-tags="photonics imaging">
+                <a class="rcard-media" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13060285/" tabindex="-1" aria-hidden="true">
+                  <img class="rcard-poster rcard-poster--contain" src="images/Parametric amplification.png" alt="" loading="lazy">
                 </a>
-                <span class="project-org">Boston University, High Dimensional Photonics Lab</span>
-                <p class="project-desc">Demonstrated fiber-based parametric optical amplification paired with conventional high-bandwidth photodiodes to overcome the sensitivity–bandwidth trade-off in low-photon-flux detection. Achieved &gt;10× sensitivity improvement at &gt;10× higher bandwidths.</p>
-              </div>
+                <div class="rcard-body">
+                  <div class="rcard-meta">
+                    <span class="venue venue--preprint">bioRxiv 2026</span>
+                    <span class="venue-note">Preprint</span>
+                  </div>
+                  <h3 class="rcard-title"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13060285/">Fiber Optical Parametric Amplification of Low-Photon-Flux Microscopy Signals</a></h3>
+                  <p class="rcard-authors">J. Demas, <span class="me">L. Tan</span>, S. Ramachandran</p>
+                  <p class="rcard-org">Boston University, High Dimensional Photonics Lab</p>
+                  <p class="rcard-desc">Fiber-based parametric optical amplification paired with conventional high-bandwidth photodiodes overcomes the sensitivity–bandwidth trade-off in low-photon-flux detection, reaching more than 10× higher sensitivity at more than 10× higher bandwidths.</p>
+                  <div class="rcard-links">
+                    <a class="rbtn" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13060285/"><svg aria-hidden="true"><use href="#i-paper"/></svg>Paper</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="rcard" data-tags="metaoptics imaging">
+                <a class="rcard-media" href="https://github.com/linruitan/linruitan.github.io/tree/main/angle-insensitive%20plasmonic%20metasurface" tabindex="-1" aria-hidden="true">
+                  <img class="rcard-poster rcard-poster--contain" src="images/Designed_Metasurface.png" alt="" loading="lazy">
+                  <img class="rcard-hover rcard-poster--contain" data-src="images/Metasurface_transmission.png" alt="">
+                </a>
+                <div class="rcard-body">
+                  <div class="rcard-meta">
+                    <span class="venue venue--project">Project</span>
+                    <span class="venue-note">Simulation &amp; reproduction</span>
+                  </div>
+                  <h3 class="rcard-title"><a href="https://github.com/linruitan/linruitan.github.io/tree/main/angle-insensitive%20plasmonic%20metasurface">Angle-Insensitive Plasmonic Metasurfaces for Spectral Imaging</a></h3>
+                  <p class="rcard-authors"><span class="me">Linrui Tan</span></p>
+                  <p class="rcard-org">University of Rochester, with Prof. Cotrufo</p>
+                  <p class="rcard-desc">Designed and simulated angle-insensitive plasmonic metasurfaces, exploring how nanostructure geometry and materials shape the transmission spectra of 100 topology-optimized units (RCWA, 450–750 nm, 0° and 15° incidence).</p>
+                  <div class="rcard-links">
+                    <a class="rbtn" href="https://github.com/linruitan/linruitan.github.io/tree/main/angle-insensitive%20plasmonic%20metasurface"><svg aria-hidden="true"><use href="#i-code"/></svg>Code</a>
+                    <a class="rbtn" href="angle-insensitive%20plasmonic%20metasurface/Laser%20%20%20Photonics%20Reviews%20-%202024%20-%20Yang%20-%20Angle%E2%80%90Insensitive%20Spectral%20Imaging%20Based%20on%20Topology%E2%80%90Optimized%20Plasmonic.pdf"><svg aria-hidden="true"><use href="#i-book"/></svg>Reference · Yang et al., LPR 2024</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="rcard" data-tags="photonics">
+                <a class="rcard-media" href="images/eo-modulator.mp4" tabindex="-1" aria-hidden="true">
+                  <img class="rcard-poster" src="images/eo-modulator-poster.jpg" alt="" loading="lazy">
+                  <video class="rcard-hover" data-src="images/eo-modulator.mp4" data-src-webm="images/eo-modulator.webm" muted loop playsinline preload="none"></video>
+                </a>
+                <div class="rcard-body">
+                  <div class="rcard-meta">
+                    <span class="venue venue--project">Project</span>
+                    <span class="venue-note">Display photonics</span>
+                  </div>
+                  <h3 class="rcard-title"><a href="images/eo-modulator.mp4">Electro-Optic Modulators for the RGB Color Space</a></h3>
+                  <p class="rcard-authors"><span class="me">Linrui Tan</span></p>
+                  <p class="rcard-org">University of Rochester, Laboratory of Nanophotonics (Prof. Qiang Lin)</p>
+                  <p class="rcard-desc">Developed and analyzed electro-optic modulators, optimizing drive voltages and color coverage to determine V<sub>π</sub> at 450, 520 and 633 nm for high-definition, wide-gamut EO displays.</p>
+                  <div class="rcard-links">
+                    <a class="rbtn" href="images/eo-modulator.mp4"><svg aria-hidden="true"><use href="#i-play"/></svg>Video</a>
+                  </div>
+                </div>
+              </article>
+
+              <p class="rcards-empty" hidden>Nothing under this topic yet.</p>
             </div>
 
-            <div class="project-row">
-              <div class="project-img">
-                <a href="images/EO%20modulator.gif">
-                  <img src="images/EO%20modulator.gif" alt="EO modulator">
-                </a>
-              </div>
+            <h2 class="section-heading spaced">Service</h2>
+            <div class="service-row">
+              <svg class="enso" viewBox="0 0 56 56" aria-hidden="true"><path d="M30 6 C 14 5, 5 17, 6 29 C 7 43, 20 51, 32 49 C 44 47, 51 36, 49 24 C 48 17, 44 12, 39 9" fill="none" stroke="#221f1a" stroke-opacity="0.7" stroke-width="3.2" stroke-linecap="round"/></svg>
               <div>
-                <a href="images/EO%20modulator.gif">
-                  <span class="project-title">EO-Modulator for RGB Space</span>
-                </a>
-                <span class="project-org">University of Rochester, Laboratory of Nanophotonics (Prof. Qiang Lin)</span>
-                <p class="project-desc">Developed and analyzed electro-optic (EO) modulators, optimizing drive voltages and color coverage to determine V<sub>π</sub> for 450 nm, 520 nm, and 633 nm operation for high-definition, wide-gamut EO display applications.</p>
-              </div>
-            </div>
-
-            <div class="project-row">
-              <div class="project-img">
-                <a href="https://github.com/tanlr20030801/tanlr20030801.github.io/tree/main/angle-insensitive%20plasmonic%20metasurface">
-                  <img src="images/Designed_Metasurface.png" alt="Designed metasurface">
-                  <img src="images/Metasurface_transmission.png" alt="Metasurface transmission">
-                </a>
-              </div>
-              <div>
-                <a href="https://github.com/tanlr20030801/tanlr20030801.github.io/tree/main/angle-insensitive%20plasmonic%20metasurface">
-                  <span class="project-title">Angle-Insensitive Metasurface Device</span>
-                </a>
-                <span class="project-org">University of Rochester (Prof. Cotrufo)</span>
-                <p class="project-desc">Designed and simulated angle-insensitive plasmonic metasurfaces. Explored how nanostructure geometry and material choices shape transmission spectra, with applications to compact, tunable optical components.</p>
-              </div>
-            </div>
-
-            <div class="project-row">
-              <div class="project-img">
-                <svg class="enso" viewBox="0 0 56 56" aria-hidden="true"><path d="M30 6 C 14 5, 5 17, 6 29 C 7 43, 20 51, 32 49 C 44 47, 51 36, 49 24 C 48 17, 44 12, 39 9" fill="none" stroke="#221f1a" stroke-opacity="0.7" stroke-width="3.2" stroke-linecap="round"/></svg>
-              </div>
-              <div>
-                <span class="project-title">Volunteer &amp; Mentoring</span>
-                <span class="project-org">THE AGGY PROJECT; Buddhist Student Association</span>
-                <p class="project-desc">As an advisor for THE AGGY PROJECT, mentored high school students on education pathways and research. As Event Chair of the Buddhist Student Association, organized dharma studies, meditation sessions, temple trips, and interfaith collaborations.</p>
+                <p class="service-title">Volunteer &amp; Mentoring</p>
+                <p class="rcard-org">THE AGGY PROJECT; Buddhist Student Association</p>
+                <p class="rcard-desc">As an advisor for THE AGGY PROJECT, mentored high school students on education pathways and research. As Event Chair of the Buddhist Student Association, organized dharma studies, meditation sessions, temple trips, and interfaith collaborations.</p>
               </div>
             </div>
           </div>

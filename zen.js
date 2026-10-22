@@ -33,6 +33,126 @@
   }
 
   /* ------------------------------------------------------------------
+     Theme: colours come from CSS variables, so the ink-wash landscape
+     follows light and dark mode (see :root and [data-theme] in zen.css)
+     ------------------------------------------------------------------ */
+  var TC = {};
+  function readTheme() {
+    var cs = getComputedStyle(root);
+    function v(n, d) { return (cs.getPropertyValue(n) || '').trim() || d; }
+    TC.paper = [v('--cv-paper-1', '#f5f1e7'), v('--cv-paper-2', '#f3eee3'), v('--cv-paper-3', '#ede6d6')];
+    TC.mount = v('--cv-mount', '46, 44, 38');
+    TC.ink = v('--cv-ink', '34, 31, 26');
+    TC.mist = v('--cv-mist', '246, 242, 234');
+    TC.paperRgb = v('--paper-rgb', '243, 238, 227');
+    TC.inkK = parseFloat(v('--cv-ink-k', '1')) || 1;
+    TC.mountK = parseFloat(v('--cv-mount-k', '1')) || 1;
+  }
+  readTheme();
+
+  // Day / night: follows the system until the visitor chooses; the choice is remembered
+  var darkQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function themeNow() {
+    return root.getAttribute('data-theme') || (darkQuery && darkQuery.matches ? 'dark' : 'light');
+  }
+  function syncToggles() {
+    var dark = themeNow() === 'dark';
+    document.querySelectorAll('.theme-toggle').forEach(function (b) {
+      b.setAttribute('aria-pressed', dark ? 'true' : 'false');
+      b.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+      var label = b.querySelector('.theme-label');
+      if (label) label.textContent = dark ? 'Day' : 'Night';
+    });
+  }
+  function themeChanged() {
+    readTheme();
+    syncToggles();
+    window.dispatchEvent(new Event('zen-theme'));
+  }
+  document.querySelectorAll('.theme-toggle').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var next = themeNow() === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('zen-theme', next); } catch (e) { /* storage unavailable */ }
+      themeChanged();
+    });
+  });
+  if (darkQuery && darkQuery.addEventListener) {
+    darkQuery.addEventListener('change', function () {
+      if (!root.getAttribute('data-theme')) themeChanged();
+    });
+  }
+  syncToggles();
+
+  /* ------------------------------------------------------------------
+     The top bar: slips away while reading (scrolling down), returns as
+     soon as you scroll up, reach the top, or tab into it
+     ------------------------------------------------------------------ */
+  var topbar = document.getElementById('topbar');
+  if (topbar) (function () {
+    var menuBtn = topbar.querySelector('.menu-btn');
+    var lastY = window.scrollY, ticking = false;
+
+    function setOpen(open) {
+      topbar.classList.toggle('is-open', open);
+      if (menuBtn) {
+        menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      }
+      if (open) topbar.classList.remove('is-hidden');
+    }
+    function onScroll() {
+      var y = window.scrollY, dy = y - lastY;
+      topbar.classList.toggle('is-scrolled', y > 8);
+      if (topbar.classList.contains('is-open') || topbar.querySelector(':focus-visible')) {
+        topbar.classList.remove('is-hidden');
+      } else if (y < 80) {
+        topbar.classList.remove('is-hidden');
+      } else if (dy > 6) {
+        topbar.classList.add('is-hidden');            // reading on: let it go
+      } else if (dy < -6) {
+        topbar.classList.remove('is-hidden');         // looking back: here it is
+      }
+      if (Math.abs(dy) > 6 || y < 80) lastY = y;
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+    }, { passive: true });
+    topbar.addEventListener('focusin', function () { topbar.classList.remove('is-hidden'); });
+
+    if (menuBtn) {
+      menuBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        setOpen(!topbar.classList.contains('is-open'));
+      });
+      document.addEventListener('click', function (e) {
+        if (topbar.classList.contains('is-open') && !topbar.contains(e.target)) setOpen(false);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && topbar.classList.contains('is-open')) { setOpen(false); menuBtn.focus(); }
+      });
+      topbar.querySelectorAll('.topbar-link').forEach(function (a) {
+        a.addEventListener('click', function () { setOpen(false); });
+      });
+    }
+    onScroll();
+  })();
+
+  /* sections and list rows rise gently into view */
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var revealIO = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.sec-head, .about-grid, .pub, .home-photo-feature, .more').forEach(function (el) {
+      if (el.getBoundingClientRect().top > window.innerHeight) {   // only what is still below the fold
+        el.classList.add('reveal');
+        revealIO.observe(el);
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------
      Background canvas
      ------------------------------------------------------------------ */
   var canvas = document.getElementById('zen-canvas');
@@ -67,9 +187,9 @@
       still.width = W * DPR; still.height = H * DPR;
       sctx.setTransform(DPR, 0, 0, DPR, 0, 0);
       var g = sctx.createLinearGradient(0, 0, 0, H);   // rice paper
-      g.addColorStop(0, '#f5f1e7');
-      g.addColorStop(0.6, '#f3eee3');
-      g.addColorStop(1, '#ede6d6');
+      g.addColorStop(0, TC.paper[0]);
+      g.addColorStop(0.6, TC.paper[1]);
+      g.addColorStop(1, TC.paper[2]);
       sctx.fillStyle = g;
       sctx.fillRect(0, 0, W, H);
 
@@ -77,9 +197,9 @@
       RANGES.forEach(function (r, i) {                 // three ink-wash ranges, far to near
         var amp = m * r[1], base = H * r[0];
         var mg = sctx.createLinearGradient(0, base - amp * 1.4, 0, base + m * r[4]);
-        mg.addColorStop(0, 'rgba(46, 44, 38,' + r[3] + ')');
-        mg.addColorStop(0.45, 'rgba(46, 44, 38,' + (r[3] * 0.55) + ')');
-        mg.addColorStop(1, 'rgba(46, 44, 38, 0)');
+        mg.addColorStop(0, 'rgba(' + TC.mount + ',' + r[3] * TC.mountK + ')');
+        mg.addColorStop(0.45, 'rgba(' + TC.mount + ',' + (r[3] * 0.55 * TC.mountK) + ')');
+        mg.addColorStop(1, 'rgba(' + TC.mount + ', 0)');
         sctx.fillStyle = mg;
         sctx.beginPath();
         sctx.moveTo(0, H);
@@ -150,7 +270,7 @@
         return [x0 + dir * (self.lean * f + self.bend * Math.sin(Math.PI * f) * 0.5) * h + sway * f * f,
                 y0 - h * f];
       }
-      var ink = 'rgba(34, 31, 26,', A = this.alpha;
+      var ink = 'rgba(' + TC.ink + ',', A = this.alpha * TC.inkK;
       c.lineCap = 'round'; c.lineJoin = 'round';
 
       // trunk: one tapering ink shape (no overlaps, so no beading), then dry bark strokes
@@ -170,7 +290,7 @@
       for (s = SEG; s >= 0; s--) c.lineTo(Rr[s][0], Rr[s][1]);
       c.closePath();
       c.fill();
-      c.strokeStyle = 'rgba(243, 238, 227,' + (A * 1.2) + ')';
+      c.strokeStyle = 'rgba(' + TC.paperRgb + ',' + (A * 1.2) + ')';
       c.lineWidth = Math.max(0.6, h * 0.004);
       for (var k = 0; k < this.bark.length; k++) {
         var bk = this.bark[k], p = trunkAt(bk[0]), q = trunkAt(bk[0] + bk[2]);
@@ -270,8 +390,8 @@
     };
     Mist.prototype.draw = function (c) {
       var g = c.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
-      g.addColorStop(0, 'rgba(246, 242, 234,' + this.a + ')');
-      g.addColorStop(1, 'rgba(246, 242, 234, 0)');
+      g.addColorStop(0, 'rgba(' + TC.mist + ',' + this.a + ')');
+      g.addColorStop(1, 'rgba(' + TC.mist + ', 0)');
       c.fillStyle = g;
       c.beginPath();
       c.ellipse(this.x, this.y, this.r, this.r * 0.32, 0, 0, Math.PI * 2);
@@ -283,7 +403,7 @@
       var wing = Math.sin(phase) * 5 * s;
       c.save();
       c.translate(x, y);
-      c.strokeStyle = 'rgba(34, 31, 26,' + alpha + ')';
+      c.strokeStyle = 'rgba(' + TC.ink + ',' + Math.min(1, alpha * TC.inkK) + ')';
       c.lineWidth = 1.1;
       c.lineCap = 'round';
       c.beginPath();
@@ -330,7 +450,7 @@
       c.save();
       c.translate(x, y);
       c.scale(face, 1);
-      c.fillStyle = 'rgba(34, 31, 26,' + (0.62 * alpha) + ')';
+      c.fillStyle = 'rgba(' + TC.ink + ',' + Math.min(1, 0.62 * alpha * TC.inkK) + ')';
       c.beginPath(); c.ellipse(0, 0, 4.6 * s, 2.9 * s, -0.25, 0, Math.PI * 2); c.fill();     // body
       c.beginPath(); c.arc(4.2 * s, -2.6 * s, 2.1 * s, 0, Math.PI * 2); c.fill();               // head
       c.strokeStyle = c.fillStyle; c.lineWidth = 1.2 * s; c.lineCap = 'round';
@@ -442,14 +562,14 @@
         c.rotate(l.rot);
         c.globalAlpha = l.a * fade;
         if (l.kind === 0) {                                 // a little bundle of pine needles
-          c.strokeStyle = '#2b2822'; c.lineWidth = 0.9; c.lineCap = 'round';
+          c.strokeStyle = 'rgb(' + TC.ink + ')'; c.lineWidth = 0.9; c.lineCap = 'round';
           c.beginPath();
           c.moveTo(0, 0); c.lineTo(-l.len * 0.35, -l.len);
           c.moveTo(0, 0); c.lineTo(l.len * 0.35, -l.len);
           c.moveTo(0, 0); c.lineTo(0, -l.len * 1.05);
           c.stroke();
         } else {                                            // a small ink leaf
-          c.fillStyle = '#3a372f';
+          c.fillStyle = 'rgb(' + TC.ink + ')';
           c.beginPath(); c.ellipse(0, 0, l.len * 0.55, l.len * 0.2, 0, 0, Math.PI * 2); c.fill();
         }
         c.restore();
@@ -606,7 +726,7 @@
         function drawFog(s) {
           var wash = 0.62 * (1 - smooth(s, 0.8, 3.6));
           if (wash > 0.002) {
-            oc.fillStyle = 'rgba(248, 246, 240,' + wash + ')';
+            oc.fillStyle = 'rgba(' + TC.paperRgb + ',' + wash + ')';
             oc.fillRect(0, 0, OW, OH);
           }
           var fade = 1 - smooth(s, 2.6, INTRO_LEN);
@@ -618,8 +738,8 @@
             var x = (p.fx + p.drift * s) * OW, y = (p.fy - rise) * OH, r = p.r * big;
             if (y + r < 0) continue;
             var g = oc.createRadialGradient(x, y, 0, x, y, r);
-            g.addColorStop(0, 'rgba(250, 249, 245,' + (p.a * fade) + ')');
-            g.addColorStop(1, 'rgba(250, 249, 245, 0)');
+            g.addColorStop(0, 'rgba(' + TC.mist + ',' + (p.a * fade) + ')');
+            g.addColorStop(1, 'rgba(' + TC.mist + ', 0)');
             oc.fillStyle = g;
             oc.beginPath();
             oc.ellipse(x, y, r, r * 0.6, 0, 0, Math.PI * 2);
@@ -679,6 +799,8 @@
     } else {
       root.classList.remove('zen-intro');
     }
+
+    window.addEventListener('zen-theme', function () { readTheme(); paintStill(); render(); });
 
     var rt;
     window.addEventListener('resize', function () {
@@ -1022,6 +1144,105 @@
     }
 
     btn.addEventListener('click', function () { if (!restoring) drop(); });
+  })();
+
+  /* ------------------------------------------------------------------
+     Research cards: hover previews and the topic filter
+     ------------------------------------------------------------------ */
+  var rcards = Array.prototype.slice.call(document.querySelectorAll('.rcard'));
+  if (rcards.length) (function () {
+    var canHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+
+    rcards.forEach(function (card) {
+      var layer = card.querySelector('.rcard-hover');
+      if (!layer) return;
+      card.classList.add('has-hover');
+      var stopTimer = null;
+
+      function play() {
+        clearTimeout(stopTimer);
+        if (!layer.getAttribute('src')) {                     // load on first use; WebM where supported
+          var webm = layer.getAttribute('data-src-webm');
+          layer.setAttribute('src', webm && layer.canPlayType && layer.canPlayType('video/webm') ? webm : layer.getAttribute('data-src'));
+        }
+        card.classList.add('is-playing');
+        if (layer.tagName === 'VIDEO') {
+          var p = layer.play();
+          if (p && p.catch) p.catch(function () { /* autoplay refused: the poster stays */ });
+        }
+      }
+      function stop() {
+        card.classList.remove('is-playing');
+        if (layer.tagName === 'VIDEO') {
+          stopTimer = setTimeout(function () { layer.pause(); layer.currentTime = 0; }, 450);
+        }
+      }
+
+      if (canHover) {
+        card.addEventListener('pointerenter', play);
+        card.addEventListener('pointerleave', stop);
+      }
+      card.addEventListener('focusin', play);
+      card.addEventListener('focusout', function (e) { if (!card.contains(e.relatedTarget)) stop(); });
+      card._play = play; card._stop = stop;
+    });
+
+    // on touch screens: a preview plays while its card is in the middle of the screen
+    if (!canHover && !reduceMotion && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          var c = en.target;
+          if (en.isIntersecting) c._play(); else c._stop();
+        });
+      }, { rootMargin: '-30% 0px -30% 0px' });
+      rcards.forEach(function (c) { if (c._play) io.observe(c); });
+    }
+
+    // the topic filter
+    var chips = Array.prototype.slice.call(document.querySelectorAll('.rchip'));
+    var empty = document.querySelector('.rcards-empty');
+    chips.forEach(function (chip) {
+      var f = chip.getAttribute('data-filter');
+      var n = f === 'all' ? rcards.length : rcards.filter(function (c) {
+        return (' ' + c.getAttribute('data-tags') + ' ').indexOf(' ' + f + ' ') >= 0;
+      }).length;
+      var badge = document.createElement('span');
+      badge.className = 'n';
+      badge.textContent = n;
+      chip.appendChild(badge);
+      chip.addEventListener('click', function () { apply(f, true); });
+    });
+
+    function apply(f, remember) {
+      if (!chips.some(function (c) { return c.getAttribute('data-filter') === f; })) f = 'all';
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', c.getAttribute('data-filter') === f ? 'true' : 'false'); });
+      var shown = 0;
+      rcards.forEach(function (c, i) {
+        var match = f === 'all' || (' ' + c.getAttribute('data-tags') + ' ').indexOf(' ' + f + ' ') >= 0;
+        if (match) {
+          shown++;
+          if (c.hidden) {
+            c.hidden = false;
+            if (!reduceMotion) {
+              c.classList.add('is-entering');
+              setTimeout(function () { c.classList.remove('is-entering'); }, 30 + i * 60);
+            }
+          }
+        } else {
+          c.hidden = true;
+        }
+      });
+      if (empty) empty.hidden = shown > 0;
+      if (remember && history.replaceState) {
+        history.replaceState(null, '', f === 'all' ? location.pathname : '#topic=' + f);
+      }
+    }
+    function fromHash() {
+      var m = /topic=([\w-]+)/.exec(location.hash);
+      if (m) apply(m[1], false);
+    }
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
   })();
 
   /* ------------------------------------------------------------------
